@@ -108,7 +108,7 @@ func Test_CollectionInfoNew(t *testing.T) {
 		assert.Error(t, err)
 		assert.Nil(t, info)
 
-		// partiton ID list is empty
+		// partition ID list is empty
 		info, err = NewCollectionInfo(schema, 2, []int64{})
 		assert.Error(t, err)
 		assert.Nil(t, info)

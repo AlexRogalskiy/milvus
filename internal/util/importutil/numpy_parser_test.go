@@ -447,7 +447,7 @@ func Test_NumpyParserCreateReaders(t *testing.T) {
 		defer closeReaders(readers)
 	})
 
-	t.Run("velidate header failed", func(t *testing.T) {
+	t.Run("validate header failed", func(t *testing.T) {
 		filePath := TempFilesPath + "FieldBool.npy"
 		err = CreateNumpyFile(filePath, []int32{1, 2, 3, 4, 5})
 		assert.NoError(t, err)
@@ -488,7 +488,7 @@ func Test_NumpyParserReadData(t *testing.T) {
 			assert.Equal(t, 3, fieldData.RowNum())
 		}
 
-		// unsupport data type
+		// unsupported data type
 		columnReader := &NumpyColumnReader{
 			fieldName: "dummy",
 			dataType:  schemapb.DataType_None,

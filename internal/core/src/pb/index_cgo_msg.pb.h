@@ -1042,25 +1042,25 @@ class BinarySet final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kDatasFieldNumber = 1,
+    kDataFieldNumber = 1,
   };
-  // repeated .milvus.proto.indexcgo.Binary datas = 1;
-  int datas_size() const;
+  // repeated .milvus.proto.indexcgo.Binary data = 1;
+  int data_size() const;
   private:
-  int _internal_datas_size() const;
+  int _internal_data_size() const;
   public:
-  void clear_datas();
-  ::milvus::proto::indexcgo::Binary* mutable_datas(int index);
+  void clear_data();
+  ::milvus::proto::indexcgo::Binary* mutable_data(int index);
   ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::milvus::proto::indexcgo::Binary >*
-      mutable_datas();
+      mutable_data();
   private:
-  const ::milvus::proto::indexcgo::Binary& _internal_datas(int index) const;
-  ::milvus::proto::indexcgo::Binary* _internal_add_datas();
+  const ::milvus::proto::indexcgo::Binary& _internal_data(int index) const;
+  ::milvus::proto::indexcgo::Binary* _internal_add_data();
   public:
-  const ::milvus::proto::indexcgo::Binary& datas(int index) const;
-  ::milvus::proto::indexcgo::Binary* add_datas();
+  const ::milvus::proto::indexcgo::Binary& data(int index) const;
+  ::milvus::proto::indexcgo::Binary* add_data();
   const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::milvus::proto::indexcgo::Binary >&
-      datas() const;
+      data() const;
 
   // @@protoc_insertion_point(class_scope:milvus.proto.indexcgo.BinarySet)
  private:
@@ -1070,7 +1070,7 @@ class BinarySet final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
-    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::milvus::proto::indexcgo::Binary > datas_;
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::milvus::proto::indexcgo::Binary > data_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
@@ -1349,44 +1349,44 @@ inline void Binary::set_allocated_value(std::string* value) {
 
 // BinarySet
 
-// repeated .milvus.proto.indexcgo.Binary datas = 1;
-inline int BinarySet::_internal_datas_size() const {
-  return _impl_.datas_.size();
+// repeated .milvus.proto.indexcgo.Binary data = 1;
+inline int BinarySet::_internal_data_size() const {
+  return _impl_.data_.size();
 }
-inline int BinarySet::datas_size() const {
-  return _internal_datas_size();
+inline int BinarySet::data_size() const {
+  return _internal_data_size();
 }
-inline void BinarySet::clear_datas() {
-  _impl_.datas_.Clear();
+inline void BinarySet::clear_data() {
+  _impl_.data_.Clear();
 }
-inline ::milvus::proto::indexcgo::Binary* BinarySet::mutable_datas(int index) {
-  // @@protoc_insertion_point(field_mutable:milvus.proto.indexcgo.BinarySet.datas)
-  return _impl_.datas_.Mutable(index);
+inline ::milvus::proto::indexcgo::Binary* BinarySet::mutable_data(int index) {
+  // @@protoc_insertion_point(field_mutable:milvus.proto.indexcgo.BinarySet.data)
+  return _impl_.data_.Mutable(index);
 }
 inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::milvus::proto::indexcgo::Binary >*
-BinarySet::mutable_datas() {
-  // @@protoc_insertion_point(field_mutable_list:milvus.proto.indexcgo.BinarySet.datas)
-  return &_impl_.datas_;
+BinarySet::mutable_data() {
+  // @@protoc_insertion_point(field_mutable_list:milvus.proto.indexcgo.BinarySet.data)
+  return &_impl_.data_;
 }
-inline const ::milvus::proto::indexcgo::Binary& BinarySet::_internal_datas(int index) const {
-  return _impl_.datas_.Get(index);
+inline const ::milvus::proto::indexcgo::Binary& BinarySet::_internal_data(int index) const {
+  return _impl_.data_.Get(index);
 }
-inline const ::milvus::proto::indexcgo::Binary& BinarySet::datas(int index) const {
-  // @@protoc_insertion_point(field_get:milvus.proto.indexcgo.BinarySet.datas)
-  return _internal_datas(index);
+inline const ::milvus::proto::indexcgo::Binary& BinarySet::data(int index) const {
+  // @@protoc_insertion_point(field_get:milvus.proto.indexcgo.BinarySet.data)
+  return _internal_data(index);
 }
-inline ::milvus::proto::indexcgo::Binary* BinarySet::_internal_add_datas() {
-  return _impl_.datas_.Add();
+inline ::milvus::proto::indexcgo::Binary* BinarySet::_internal_add_data() {
+  return _impl_.data_.Add();
 }
-inline ::milvus::proto::indexcgo::Binary* BinarySet::add_datas() {
-  ::milvus::proto::indexcgo::Binary* _add = _internal_add_datas();
-  // @@protoc_insertion_point(field_add:milvus.proto.indexcgo.BinarySet.datas)
+inline ::milvus::proto::indexcgo::Binary* BinarySet::add_data() {
+  ::milvus::proto::indexcgo::Binary* _add = _internal_add_data();
+  // @@protoc_insertion_point(field_add:milvus.proto.indexcgo.BinarySet.data)
   return _add;
 }
 inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::milvus::proto::indexcgo::Binary >&
-BinarySet::datas() const {
-  // @@protoc_insertion_point(field_list:milvus.proto.indexcgo.BinarySet.datas)
-  return _impl_.datas_;
+BinarySet::data() const {
+  // @@protoc_insertion_point(field_list:milvus.proto.indexcgo.BinarySet.data)
+  return _impl_.data_;
 }
 
 #ifdef __GNUC__

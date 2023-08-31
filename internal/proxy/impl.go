@@ -3276,7 +3276,7 @@ func (node *Proxy) GetPersistentSegmentInfo(ctx context.Context, req *milvuspb.G
 
 	getSegmentsByStatesResponse, err := node.dataCoord.GetSegmentsByStates(ctx, &datapb.GetSegmentsByStatesRequest{
 		CollectionID: collectionID,
-		// -1 means list all partition segemnts
+		// -1 means list all partition segments
 		PartitionID: -1,
 		States:      []commonpb.SegmentState{commonpb.SegmentState_Flushing, commonpb.SegmentState_Flushed, commonpb.SegmentState_Sealed},
 	})
@@ -4318,7 +4318,7 @@ func (node *Proxy) DropRole(ctx context.Context, req *milvuspb.DropRoleRequest) 
 		}, nil
 	}
 	if IsDefaultRole(req.RoleName) {
-		errMsg := fmt.Sprintf("the role[%s] is a default role, which can't be droped", req.RoleName)
+		errMsg := fmt.Sprintf("the role[%s] is a default role, which can't be dropped", req.RoleName)
 		return &commonpb.Status{
 			ErrorCode: commonpb.ErrorCode_IllegalArgument,
 			Reason:    errMsg,

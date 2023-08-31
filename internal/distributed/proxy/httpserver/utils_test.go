@@ -507,7 +507,7 @@ func newCollectionSchema(coll *schemapb.CollectionSchema) *schemapb.CollectionSc
 	return coll
 }
 
-func withUnsupportField(coll *schemapb.CollectionSchema) *schemapb.CollectionSchema {
+func withUnsupportedField(coll *schemapb.CollectionSchema) *schemapb.CollectionSchema {
 	fieldSchema10 := schemapb.FieldSchema{
 		Name:      "field-array",
 		DataType:  schemapb.DataType_Array,
@@ -529,7 +529,7 @@ func withDynamicField(coll *schemapb.CollectionSchema) *schemapb.CollectionSchem
 	return coll
 }
 
-func newFieldData(fieldDatas []*schemapb.FieldData, firstFieldType schemapb.DataType) []*schemapb.FieldData {
+func newFieldData(fieldData []*schemapb.FieldData, firstFieldType schemapb.DataType) []*schemapb.FieldData {
 	fieldData1 := schemapb.FieldData{
 		Type:      schemapb.DataType_Bool,
 		FieldName: "field-bool",
@@ -544,7 +544,7 @@ func newFieldData(fieldDatas []*schemapb.FieldData, firstFieldType schemapb.Data
 		},
 		IsDynamic: false,
 	}
-	fieldDatas = append(fieldDatas, &fieldData1)
+	fieldData = append(fieldData, &fieldData1)
 
 	fieldData2 := schemapb.FieldData{
 		Type:      schemapb.DataType_Int8,
@@ -560,7 +560,7 @@ func newFieldData(fieldDatas []*schemapb.FieldData, firstFieldType schemapb.Data
 		},
 		IsDynamic: false,
 	}
-	fieldDatas = append(fieldDatas, &fieldData2)
+	fieldData = append(fieldData, &fieldData2)
 
 	fieldData3 := schemapb.FieldData{
 		Type:      schemapb.DataType_Int16,
@@ -576,7 +576,7 @@ func newFieldData(fieldDatas []*schemapb.FieldData, firstFieldType schemapb.Data
 		},
 		IsDynamic: false,
 	}
-	fieldDatas = append(fieldDatas, &fieldData3)
+	fieldData = append(fieldData, &fieldData3)
 
 	fieldData4 := schemapb.FieldData{
 		Type:      schemapb.DataType_Int32,
@@ -592,7 +592,7 @@ func newFieldData(fieldDatas []*schemapb.FieldData, firstFieldType schemapb.Data
 		},
 		IsDynamic: false,
 	}
-	fieldDatas = append(fieldDatas, &fieldData4)
+	fieldData = append(fieldData, &fieldData4)
 
 	fieldData5 := schemapb.FieldData{
 		Type:      schemapb.DataType_Float,
@@ -608,7 +608,7 @@ func newFieldData(fieldDatas []*schemapb.FieldData, firstFieldType schemapb.Data
 		},
 		IsDynamic: false,
 	}
-	fieldDatas = append(fieldDatas, &fieldData5)
+	fieldData = append(fieldData, &fieldData5)
 
 	fieldData6 := schemapb.FieldData{
 		Type:      schemapb.DataType_Double,
@@ -624,7 +624,7 @@ func newFieldData(fieldDatas []*schemapb.FieldData, firstFieldType schemapb.Data
 		},
 		IsDynamic: false,
 	}
-	fieldDatas = append(fieldDatas, &fieldData6)
+	fieldData = append(fieldData, &fieldData6)
 
 	fieldData7 := schemapb.FieldData{
 		Type:      schemapb.DataType_String,
@@ -640,7 +640,7 @@ func newFieldData(fieldDatas []*schemapb.FieldData, firstFieldType schemapb.Data
 		},
 		IsDynamic: false,
 	}
-	fieldDatas = append(fieldDatas, &fieldData7)
+	fieldData = append(fieldData, &fieldData7)
 
 	fieldData8 := schemapb.FieldData{
 		Type:      schemapb.DataType_VarChar,
@@ -656,7 +656,7 @@ func newFieldData(fieldDatas []*schemapb.FieldData, firstFieldType schemapb.Data
 		},
 		IsDynamic: false,
 	}
-	fieldDatas = append(fieldDatas, &fieldData8)
+	fieldData = append(fieldData, &fieldData8)
 
 	fieldData9 := schemapb.FieldData{
 		Type:      schemapb.DataType_JSON,
@@ -672,7 +672,7 @@ func newFieldData(fieldDatas []*schemapb.FieldData, firstFieldType schemapb.Data
 		},
 		IsDynamic: false,
 	}
-	fieldDatas = append(fieldDatas, &fieldData9)
+	fieldData = append(fieldData, &fieldData9)
 
 	fieldData10 := schemapb.FieldData{
 		Type:      schemapb.DataType_Array,
@@ -707,7 +707,7 @@ func newFieldData(fieldDatas []*schemapb.FieldData, firstFieldType schemapb.Data
 		},
 		IsDynamic: true,
 	}
-	fieldDatas = append(fieldDatas, &fieldData11)
+	fieldData = append(fieldData, &fieldData11)
 
 	switch firstFieldType {
 	case schemapb.DataType_None:
@@ -747,7 +747,7 @@ func newFieldData(fieldDatas []*schemapb.FieldData, firstFieldType schemapb.Data
 		}
 	}
 
-	return fieldDatas
+	return fieldData
 }
 
 func newSearchResult(results []map[string]interface{}) []map[string]interface{} {

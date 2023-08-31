@@ -686,7 +686,7 @@ const char descriptor_table_protodef_plan_2eproto[] PROTOBUF_SECTION_VARIABLE(pr
   "2\036.milvus.proto.plan.ArithOpType\"\221\002\n\032Bin"
   "aryArithOpEvalRangeExpr\0222\n\013column_info\030\001"
   " \001(\0132\035.milvus.proto.plan.ColumnInfo\0220\n\010a"
-  "rith_op\030\002 \001(\0162\036.milvus.proto.plan.ArithO"
+  "with_op\030\002 \001(\0162\036.milvus.proto.plan.ArithO"
   "pType\0226\n\rright_operand\030\003 \001(\0132\037.milvus.pr"
   "oto.plan.GenericValue\022%\n\002op\030\004 \001(\0162\031.milv"
   "us.proto.plan.OpType\022.\n\005value\030\005 \001(\0132\037.mi"

@@ -195,9 +195,9 @@ func Test_JSONRowConsumerHandleIntPK(t *testing.T) {
 		}
 
 		// rows to input
-		intputRowCount := 100
-		input := make([]map[storage.FieldID]interface{}, intputRowCount)
-		for j := 0; j < intputRowCount; j++ {
+		inputRowCount := 100
+		input := make([]map[storage.FieldID]interface{}, inputRowCount)
+		for j := 0; j < inputRowCount; j++ {
 			input[j] = map[int64]interface{}{
 				102: "string",
 				103: json.Number("6.18"),
@@ -262,7 +262,7 @@ func Test_JSONRowConsumerHandleIntPK(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, waitFlushRowCount*int(shardNum), flushedRowCount)
 		assert.Equal(t, shardNum, callTime)
-		assert.Equal(t, int64(intputRowCount), consumer.RowCount())
+		assert.Equal(t, int64(inputRowCount), consumer.RowCount())
 		assert.Equal(t, 2, len(consumer.IDRange()))
 		assert.Equal(t, int64(1), consumer.IDRange()[0])
 		assert.Equal(t, int64(1+intputRowCount), consumer.IDRange()[1])
@@ -272,7 +272,7 @@ func Test_JSONRowConsumerHandleIntPK(t *testing.T) {
 		flushedRowCount = 0
 		err = consumer.Handle(nil)
 		assert.NoError(t, err)
-		assert.Equal(t, intputRowCount, flushedRowCount)
+		assert.Equal(t, inputRowCount, flushedRowCount)
 		assert.Equal(t, shardNum, callTime)
 	})
 
@@ -379,9 +379,9 @@ func Test_JSONRowConsumerHandleIntPK(t *testing.T) {
 		consumer := createConsumeFunc(shardNum, partitionIDs, flushFunc)
 
 		// rows to input
-		intputRowCount := 100
-		input := make([]map[storage.FieldID]interface{}, intputRowCount)
-		for j := 0; j < intputRowCount; j++ {
+		inputRowCount := 100
+		input := make([]map[storage.FieldID]interface{}, inputRowCount)
+		for j := 0; j < inputRowCount; j++ {
 			input[j] = map[int64]interface{}{
 				101: json.Number(strconv.Itoa(j)),
 				102: "partitionKey_" + strconv.Itoa(j),
@@ -392,13 +392,13 @@ func Test_JSONRowConsumerHandleIntPK(t *testing.T) {
 		// 100 rows are consumed to different partitions
 		err := consumer.Handle(input)
 		assert.NoError(t, err)
-		assert.Equal(t, int64(intputRowCount), consumer.RowCount())
+		assert.Equal(t, int64(inputRowCount), consumer.RowCount())
 
 		// call handle again, 100 rows are flushed
 		flushedRowCount = 0
 		err = consumer.Handle(nil)
 		assert.NoError(t, err)
-		assert.Equal(t, intputRowCount, flushedRowCount)
+		assert.Equal(t, inputRowCount, flushedRowCount)
 	})
 }
 
@@ -488,9 +488,9 @@ func Test_JSONRowConsumerHandleVarcharPK(t *testing.T) {
 		consumer.collectionInfo.PartitionIDs = []int64{partitionID}
 
 		// rows to input
-		intputRowCount := 100
-		input = make([]map[storage.FieldID]interface{}, intputRowCount)
-		for j := 0; j < intputRowCount; j++ {
+		inputRowCount := 100
+		input = make([]map[storage.FieldID]interface{}, inputRowCount)
+		for j := 0; j < inputRowCount; j++ {
 			input[j] = map[int64]interface{}{
 				101: "primaryKey_" + strconv.Itoa(j),
 				102: json.Number(strconv.Itoa(j)),
@@ -501,13 +501,13 @@ func Test_JSONRowConsumerHandleVarcharPK(t *testing.T) {
 		// rows are consumed
 		err = consumer.Handle(input)
 		assert.NoError(t, err)
-		assert.Equal(t, int64(intputRowCount), consumer.RowCount())
+		assert.Equal(t, int64(inputRowCount), consumer.RowCount())
 		assert.Equal(t, 0, len(consumer.IDRange()))
 
 		// call handle again, 100 rows are flushed
 		err = consumer.Handle(nil)
 		assert.NoError(t, err)
-		assert.Equal(t, intputRowCount, flushedRowCount)
+		assert.Equal(t, inputRowCount, flushedRowCount)
 		assert.Equal(t, shardNum, callTime)
 	})
 
@@ -532,9 +532,9 @@ func Test_JSONRowConsumerHandleVarcharPK(t *testing.T) {
 		consumer := createConsumeFunc(shardNum, partitionIDs, flushFunc)
 
 		// rows to input
-		intputRowCount := 100
-		input := make([]map[storage.FieldID]interface{}, intputRowCount)
-		for j := 0; j < intputRowCount; j++ {
+		inputRowCount := 100
+		input := make([]map[storage.FieldID]interface{}, inputRowCount)
+		for j := 0; j < inputRowCount; j++ {
 			input[j] = map[int64]interface{}{
 				101: "primaryKey_" + strconv.Itoa(j),
 				102: json.Number(strconv.Itoa(j)),
@@ -545,13 +545,13 @@ func Test_JSONRowConsumerHandleVarcharPK(t *testing.T) {
 		// 100 rows are consumed to different partitions
 		err := consumer.Handle(input)
 		assert.NoError(t, err)
-		assert.Equal(t, int64(intputRowCount), consumer.RowCount())
+		assert.Equal(t, int64(inputRowCount), consumer.RowCount())
 
 		// call handle again, 100 rows are flushed
 		flushedRowCount = 0
 		err = consumer.Handle(nil)
 		assert.NoError(t, err)
-		assert.Equal(t, intputRowCount, flushedRowCount)
+		assert.Equal(t, inputRowCount, flushedRowCount)
 
 		// string type primary key cannot be auto-generated
 		consumer.validators[101].autoID = true

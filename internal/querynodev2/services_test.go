@@ -1415,7 +1415,7 @@ func (suite *ServiceSuite) TestShowConfigurations_Normal() {
 	resp, err := suite.node.ShowConfigurations(ctx, req)
 	suite.NoError(err)
 	suite.Equal(commonpb.ErrorCode_Success, resp.Status.ErrorCode)
-	suite.Equal(1, len(resp.Configuations))
+	suite.Equal(1, len(resp.Configurations))
 }
 
 func (suite *ServiceSuite) TestShowConfigurations_Failed() {

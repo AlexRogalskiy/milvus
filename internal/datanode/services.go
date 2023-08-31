@@ -201,7 +201,7 @@ func (node *DataNode) ShowConfigurations(ctx context.Context, req *internalpb.Sh
 
 		return &internalpb.ShowConfigurationsResponse{
 			Status:        merr.Status(err),
-			Configuations: nil,
+			Configurations: nil,
 		}, nil
 	}
 	configList := make([]*commonpb.KeyValuePair, 0)
@@ -215,7 +215,7 @@ func (node *DataNode) ShowConfigurations(ctx context.Context, req *internalpb.Sh
 
 	return &internalpb.ShowConfigurationsResponse{
 		Status:        merr.Status(nil),
-		Configuations: configList,
+		Configurations: configList,
 	}, nil
 }
 

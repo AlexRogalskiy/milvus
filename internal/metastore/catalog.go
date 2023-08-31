@@ -36,7 +36,7 @@ type RootCoordCatalog interface {
 
 	// GetCredential gets the credential info for the username, returns error if no credential exists for this username.
 	GetCredential(ctx context.Context, username string) (*model.Credential, error)
-	// CreateCredential creates credential by Username and EncryptedPassword in crediential. Please make sure credential.Username isn't empty before calling this API. Credentials already exists will be altered.
+	// CreateCredential creates credential by Username and EncryptedPassword in credential. Please make sure credential.Username isn't empty before calling this API. Credentials already exists will be altered.
 	CreateCredential(ctx context.Context, credential *model.Credential) error
 	// AlterCredential does exactly the same as CreateCredential
 	AlterCredential(ctx context.Context, credential *model.Credential) error
@@ -62,7 +62,7 @@ type RootCoordCatalog interface {
 	ListRole(ctx context.Context, tenant string, entity *milvuspb.RoleEntity, includeUserInfo bool) ([]*milvuspb.RoleResult, error)
 	// ListUser returns list of UserResults for the tenant
 	// Returns all users if entity is nill
-	// Returns the specific user if enitity is provided
+	// Returns the specific user if entity is provided
 	// Returns RoleInfo inside each UserResult if includeRoleInfo is True
 	ListUser(ctx context.Context, tenant string, entity *milvuspb.UserEntity, includeRoleInfo bool) ([]*milvuspb.UserResult, error)
 	// AlterGrant  grants or revokes a grant of a role to an object, according to the operateType.
@@ -71,7 +71,7 @@ type RootCoordCatalog interface {
 	// DeleteGrant deletes all the grant for a role.
 	// Please make sure the role.Name isn't empty before call this API.
 	DeleteGrant(ctx context.Context, tenant string, role *milvuspb.RoleEntity) error
-	// ListGrant lists all grant infos accoording to entity for the tenant
+	// ListGrant lists all grant infos according to entity for the tenant
 	// Please make sure entity valid before calling this API
 	ListGrant(ctx context.Context, tenant string, entity *milvuspb.GrantEntity) ([]*milvuspb.GrantEntity, error)
 	ListPolicy(ctx context.Context, tenant string) ([]string, error)

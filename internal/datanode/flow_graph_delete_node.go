@@ -164,7 +164,7 @@ func (dn *deleteNode) bufferDeleteMsg(msg *msgstream.DeleteMsg, tr TimeRange, st
 
 		tss, ok := segIDToTss[segID]
 		if !ok || len(pks) != len(tss) {
-			return nil, fmt.Errorf("primary keys and timestamp's element num mis-match, segmentID = %d", segID)
+			return nil, fmt.Errorf("primary keys and timestamp's element num miss-match, segmentID = %d", segID)
 		}
 		dn.delBufferManager.StoreNewDeletes(segID, pks, tss, tr, startPos, endPos)
 	}

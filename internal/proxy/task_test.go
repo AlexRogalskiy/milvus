@@ -3422,11 +3422,11 @@ func TestPartitionKey(t *testing.T) {
 
 	nb := 10
 	fieldID := common.StartOfUserFieldID
-	fieldDatas := make([]*schemapb.FieldData, 0)
+	fieldData := make([]*schemapb.FieldData, 0)
 	for fieldName, dataType := range fieldName2Type {
 		fieldData := generateFieldData(dataType, fieldName, nb)
 		fieldData.FieldId = int64(fieldID)
-		fieldDatas = append(fieldDatas, generateFieldData(dataType, fieldName, nb))
+		fieldData = append(fieldData, generateFieldData(dataType, fieldName, nb))
 		fieldID++
 	}
 
@@ -3441,7 +3441,7 @@ func TestPartitionKey(t *testing.T) {
 						SourceID: paramtable.GetNodeID(),
 					},
 					CollectionName: collectionName,
-					FieldsData:     fieldDatas,
+					FieldsData:     fieldData,
 					NumRows:        uint64(nb),
 					Version:        msgpb.InsertDataVersion_ColumnBased,
 				},
@@ -3497,7 +3497,7 @@ func TestPartitionKey(t *testing.T) {
 					commonpbutil.WithSourceID(paramtable.GetNodeID()),
 				),
 				CollectionName: collectionName,
-				FieldsData:     fieldDatas,
+				FieldsData:     fieldData,
 				NumRows:        uint32(nb),
 			},
 

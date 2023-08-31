@@ -102,7 +102,7 @@ struct BinaryDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 BinaryDefaultTypeInternal _Binary_default_instance_;
 PROTOBUF_CONSTEXPR BinarySet::BinarySet(
     ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.datas_)*/{}
+    /*decltype(_impl_.data_)*/{}
   , /*decltype(_impl_._cached_size_)*/{}} {}
 struct BinarySetDefaultTypeInternal {
   PROTOBUF_CONSTEXPR BinarySetDefaultTypeInternal()
@@ -173,7 +173,7 @@ const uint32_t TableStruct_index_5fcgo_5fmsg_2eproto::offsets[] PROTOBUF_SECTION
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::milvus::proto::indexcgo::BinarySet, _impl_.datas_),
+  PROTOBUF_FIELD_OFFSET(::milvus::proto::indexcgo::BinarySet, _impl_.data_),
 };
 static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, -1, sizeof(::milvus::proto::indexcgo::TypeParams)},
@@ -1294,7 +1294,7 @@ BinarySet::BinarySet(const BinarySet& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   BinarySet* const _this = this; (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.datas_){from._impl_.datas_}
+      decltype(_impl_.data_){from._impl_.data_}
     , /*decltype(_impl_._cached_size_)*/{}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
@@ -1306,7 +1306,7 @@ inline void BinarySet::SharedCtor(
   (void)arena;
   (void)is_message_owned;
   new (&_impl_) Impl_{
-      decltype(_impl_.datas_){arena}
+      decltype(_impl_.data_){arena}
     , /*decltype(_impl_._cached_size_)*/{}
   };
 }
@@ -1322,7 +1322,7 @@ BinarySet::~BinarySet() {
 
 inline void BinarySet::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  _impl_.datas_.~RepeatedPtrField();
+  _impl_.data_.~RepeatedPtrField();
 }
 
 void BinarySet::SetCachedSize(int size) const {
@@ -1335,7 +1335,7 @@ void BinarySet::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  _impl_.datas_.Clear();
+  _impl_.data_.Clear();
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -1345,13 +1345,13 @@ const char* BinarySet::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx
     uint32_t tag;
     ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
-      // repeated .milvus.proto.indexcgo.Binary datas = 1;
+      // repeated .milvus.proto.indexcgo.Binary data = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
           ptr -= 1;
           do {
             ptr += 1;
-            ptr = ctx->ParseMessage(_internal_add_datas(), ptr);
+            ptr = ctx->ParseMessage(_internal_add_data(), ptr);
             CHK_(ptr);
             if (!ctx->DataAvailable(ptr)) break;
           } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<10>(ptr));
@@ -1387,10 +1387,10 @@ uint8_t* BinarySet::_InternalSerialize(
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // repeated .milvus.proto.indexcgo.Binary datas = 1;
+  // repeated .milvus.proto.indexcgo.Binary data = 1;
   for (unsigned i = 0,
-      n = static_cast<unsigned>(this->_internal_datas_size()); i < n; i++) {
-    const auto& repfield = this->_internal_datas(i);
+      n = static_cast<unsigned>(this->_internal_data_size()); i < n; i++) {
+    const auto& repfield = this->_internal_data(i);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
         InternalWriteMessage(1, repfield, repfield.GetCachedSize(), target, stream);
   }
@@ -1411,9 +1411,9 @@ size_t BinarySet::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // repeated .milvus.proto.indexcgo.Binary datas = 1;
-  total_size += 1UL * this->_internal_datas_size();
-  for (const auto& msg : this->_impl_.datas_) {
+  // repeated .milvus.proto.indexcgo.Binary data = 1;
+  total_size += 1UL * this->_internal_data_size();
+  for (const auto& msg : this->_impl_.data_) {
     total_size +=
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
   }
@@ -1436,7 +1436,7 @@ void BinarySet::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROT
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  _this->_impl_.datas_.MergeFrom(from._impl_.datas_);
+  _this->_impl_.data_.MergeFrom(from._impl_.data_);
   _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
@@ -1454,7 +1454,7 @@ bool BinarySet::IsInitialized() const {
 void BinarySet::InternalSwap(BinarySet* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  _impl_.datas_.InternalSwap(&other->_impl_.datas_);
+  _impl_.data_.InternalSwap(&other->_impl_.data_);
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata BinarySet::GetMetadata() const {

@@ -432,8 +432,8 @@ import (
 //		resp, err := in.ShowConfigurations(ctx, req)
 //		assert.NoError(t, err)
 //		assert.Equal(t, commonpb.ErrorCode_Success, resp.Status.ErrorCode)
-//		assert.Equal(t, 1, len(resp.Configuations))
-//		assert.Equal(t, "indexnode.port", resp.Configuations[0].Key)
+//		assert.Equal(t, 1, len(resp.Configurations))
+//		assert.Equal(t, "indexnode.port", resp.Configurations[0].Key)
 //	})
 //
 //	t.Run("GetMetrics_system_info", func(t *testing.T) {

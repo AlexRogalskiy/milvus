@@ -1394,7 +1394,7 @@ class TestInsertString(TestcaseBase):
     @pytest.mark.tags(CaseLabel.L0)
     def test_insert_string_field_name_invalid(self):
         """
-        target: test insert string field name is invaild
+        target: test insert string field name is invalid
         method: 1.create a collection  
                 2.Insert string field name is invalid
         expected: Raise exceptions
@@ -1427,7 +1427,7 @@ class TestInsertString(TestcaseBase):
     @pytest.mark.tags(CaseLabel.L1)
     def test_insert_string_field_dtype_invalid(self):
         """
-        target: test insert string field with invaild dtype
+        target: test insert string field with invalid dtype
         method: 1.create a collection  
                 2.Insert string field dtype is invalid
         expected: Raise exception

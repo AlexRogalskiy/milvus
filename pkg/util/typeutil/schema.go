@@ -160,12 +160,12 @@ func EstimateEntitySize(fieldsData []*schemapb.FieldData, rowOffset int) (int, e
 			res += 8
 		case schemapb.DataType_VarChar:
 			if rowOffset >= len(fs.GetScalars().GetStringData().GetData()) {
-				return 0, fmt.Errorf("offset out range of field datas")
+				return 0, fmt.Errorf("offset out range of field data")
 			}
 			res += len(fs.GetScalars().GetStringData().Data[rowOffset])
 		case schemapb.DataType_Array:
 			if rowOffset >= len(fs.GetScalars().GetArrayData().GetData()) {
-				return 0, fmt.Errorf("offset out range of field datas")
+				return 0, fmt.Errorf("offset out range of field data")
 			}
 			array := fs.GetScalars().GetArrayData().GetData()[rowOffset]
 			res += CalcColumnSize(&schemapb.FieldData{
@@ -174,7 +174,7 @@ func EstimateEntitySize(fieldsData []*schemapb.FieldData, rowOffset int) (int, e
 			})
 		case schemapb.DataType_JSON:
 			if rowOffset >= len(fs.GetScalars().GetJsonData().GetData()) {
-				return 0, fmt.Errorf("offset out range of field datas")
+				return 0, fmt.Errorf("offset out range of field data")
 			}
 			res += len(fs.GetScalars().GetJsonData().GetData()[rowOffset])
 		case schemapb.DataType_BinaryVector:
@@ -742,12 +742,12 @@ func GetPartitionKeyFieldSchema(schema *schemapb.CollectionSchema) (*schemapb.Fi
 }
 
 // GetPrimaryFieldData get primary field data from all field data inserted from sdk
-func GetPrimaryFieldData(datas []*schemapb.FieldData, primaryFieldSchema *schemapb.FieldSchema) (*schemapb.FieldData, error) {
+func GetPrimaryFieldData(data []*schemapb.FieldData, primaryFieldSchema *schemapb.FieldSchema) (*schemapb.FieldData, error) {
 	primaryFieldID := primaryFieldSchema.FieldID
 	primaryFieldName := primaryFieldSchema.Name
 
 	var primaryFieldData *schemapb.FieldData
-	for _, field := range datas {
+	for _, field := range data {
 		if field.FieldId == primaryFieldID || field.FieldName == primaryFieldName {
 			primaryFieldData = field
 			break
@@ -761,12 +761,12 @@ func GetPrimaryFieldData(datas []*schemapb.FieldData, primaryFieldSchema *schema
 	return primaryFieldData, nil
 }
 
-func IsPrimaryFieldDataExist(datas []*schemapb.FieldData, primaryFieldSchema *schemapb.FieldSchema) bool {
+func IsPrimaryFieldDataExist(data []*schemapb.FieldData, primaryFieldSchema *schemapb.FieldSchema) bool {
 	primaryFieldID := primaryFieldSchema.FieldID
 	primaryFieldName := primaryFieldSchema.Name
 
 	var primaryFieldData *schemapb.FieldData
-	for _, field := range datas {
+	for _, field := range data {
 		if field.FieldId == primaryFieldID || field.FieldName == primaryFieldName {
 			primaryFieldData = field
 			break

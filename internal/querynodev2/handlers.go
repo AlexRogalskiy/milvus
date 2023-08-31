@@ -122,7 +122,7 @@ func (node *QueryNode) loadIndex(ctx context.Context, req *querypb.LoadSegmentsR
 		}
 		localSegment, ok := segment.(*segments.LocalSegment)
 		if !ok {
-			log.Warn("segment not local for load index opeartion")
+			log.Warn("segment not local for load index operation")
 			continue
 		}
 

@@ -28,7 +28,7 @@ import (
 )
 
 const (
-	TombValue = "TOMB_VAULE"
+	TombValue = "TOMB_VALUE"
 )
 
 type Filter func(key string) (string, bool)

@@ -802,7 +802,7 @@ func (s *Session) LivenessCheck(ctx context.Context, callback func()) {
 					continue
 				}
 				// not ok, connection lost
-				log.Warn("connection lost detected, shuting down")
+				log.Warn("connection lost detected, shutting down")
 				s.SetDisconnected(true)
 				if callback != nil {
 					go callback()

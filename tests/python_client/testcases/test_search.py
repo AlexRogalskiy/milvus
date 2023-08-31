@@ -35,9 +35,9 @@ max_limit = ct.max_limit
 default_search_exp = "int64 >= 0"
 default_search_string_exp = "varchar >= \"0\""
 default_search_mix_exp = "int64 >= 0 && varchar >= \"0\""
-default_invaild_string_exp = "varchar >= 0"
+default_invalid_string_exp = "varchar >= 0"
 default_json_search_exp = "json_field[\"number\"] >= 0"
-perfix_expr = 'varchar like "0%"'
+prefix_expr = 'varchar like "0%"'
 default_search_field = ct.default_float_vec_field_name
 default_search_params = ct.default_search_params
 default_int64_field_name = ct.default_int64_field_name
@@ -733,7 +733,7 @@ class TestCollectionSearchInvalid(TestcaseBase):
                             [deleted_par_name],
                             check_task=CheckTasks.err_res,
                             check_items={"err_code": 1,
-                                         "err_msg": "PartitonName: %s not found" % deleted_par_name})
+                                         "err_msg": "PartitionName: %s not found" % deleted_par_name})
 
     @pytest.mark.tags(CaseLabel.L1)
     @pytest.mark.parametrize("index, params",
@@ -786,7 +786,7 @@ class TestCollectionSearchInvalid(TestcaseBase):
                             default_limit, default_search_exp, [partition_name],
                             check_task=CheckTasks.err_res,
                             check_items={"err_code": 1,
-                                         "err_msg": "PartitonName: %s not found" % partition_name})
+                                         "err_msg": "PartitionName: %s not found" % partition_name})
 
     @pytest.mark.tags(CaseLabel.L2)
     @pytest.mark.parametrize("nq", [16385])
@@ -846,7 +846,7 @@ class TestCollectionSearchInvalid(TestcaseBase):
                             search_params, default_limit, "int64 >= 0",
                             check_task=CheckTasks.err_res,
                             check_items={"err_code": 1,
-                                         "err_msg": "Data type and metric type mis-match"})
+                                         "err_msg": "Data type and metric type miss-match"})
 
     @pytest.mark.tags(CaseLabel.L2)
     def test_search_with_output_fields_not_exist(self):
@@ -4155,7 +4155,7 @@ class TestSearchBase(TestcaseBase):
                                                                                   partition_num=1,
                                                                                   dim=dim, is_index=False)[0:5]
         vectors = [[random.random() for _ in range(dim)] for _ in range(nq)]
-        # 2. create patition
+        # 2. create partition
         partition_name = ct.default_partition_name
         par = collection_w.partitions
         # collection_w.load()
@@ -4606,7 +4606,7 @@ class TestSearchString(TestcaseBase):
         vectors = [[random.random() for _ in range(default_dim)] for _ in range(default_nq)]
         collection_w.search(vectors[:default_nq], default_search_field,
                             default_search_params, default_limit,
-                            default_invaild_string_exp,
+                            default_invalid_string_exp,
                             check_task=CheckTasks.err_res,
                             check_items={"err_code": 1,
                                          "err_msg": "failed to create query plan: type mismatch"}
@@ -4789,7 +4789,7 @@ class TestSearchString(TestcaseBase):
         collection_w.search(vectors[:default_nq], default_search_field,
                             # search all buckets
                             {"metric_type": "L2", "params": {"nprobe": 100}}, default_limit,
-                            perfix_expr,
+                            prefix_expr,
                             output_fields=output_fields,
                             _async=_async,
                             check_task=CheckTasks.check_search_results,

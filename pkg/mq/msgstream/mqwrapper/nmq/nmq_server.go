@@ -43,7 +43,7 @@ type NatsMQConfig struct {
 }
 
 // MustInitNatsMQ init global local natsmq instance.
-// Panic if initailizing operation failed.
+// Panic if initializing operation failed.
 func MustInitNatsMQ(cfg *NatsMQConfig) {
 	once.Do(func() {
 		var err error
@@ -58,7 +58,7 @@ func initNatsMQ(cfg *NatsMQConfig) (*server.Server, error) {
 	log.Info("try to initialize global nmq", zap.Any("config", cfg))
 	natsServer, err := server.NewServer(&cfg.Opts)
 	if err != nil {
-		return nil, errors.Wrap(err, "fail to initailize nmq")
+		return nil, errors.Wrap(err, "fail to initialize nmq")
 	}
 	// Config log if log file set.
 	if cfg.Opts.LogFile != "" {

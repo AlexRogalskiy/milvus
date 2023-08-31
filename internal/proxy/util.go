@@ -306,7 +306,7 @@ func validateMaxLengthPerRow(collectionName string, field *schemapb.FieldSchema)
 			return err
 		}
 		if maxLengthPerRow > defaultMaxVarCharLength || maxLengthPerRow <= 0 {
-			return fmt.Errorf("the maximum length specified for a VarChar shoule be in (0, 65535]")
+			return fmt.Errorf("the maximum length specified for a VarChar should be in (0, 65535]")
 		}
 		exist = true
 	}
@@ -360,11 +360,11 @@ func ValidateFieldAutoID(coll *schemapb.CollectionSchema) error {
 	for i, field := range coll.Fields {
 		if field.AutoID {
 			if idx != -1 {
-				return fmt.Errorf("only one field can speficy AutoID with true, field name = %s, %s", coll.Fields[idx].Name, field.Name)
+				return fmt.Errorf("only one field can specify AutoID with true, field name = %s, %s", coll.Fields[idx].Name, field.Name)
 			}
 			idx = i
 			if !field.IsPrimaryKey {
-				return fmt.Errorf("only primary field can speficy AutoID with true, field name = %s", field.Name)
+				return fmt.Errorf("only primary field can specify AutoID with true, field name = %s", field.Name)
 			}
 		}
 	}
@@ -474,7 +474,7 @@ func validateSchema(coll *schemapb.CollectionSchema) error {
 				return fmt.Errorf("there are more than one primary key, field name = %s, %s", coll.Fields[primaryIdx].Name, field.Name)
 			}
 			if field.DataType != schemapb.DataType_Int64 {
-				return fmt.Errorf("type of primary key shoule be int64")
+				return fmt.Errorf("type of primary key should be int64")
 			}
 			primaryIdx = idx
 		}
@@ -820,7 +820,7 @@ func GetCurUserFromContext(ctx context.Context) (string, error) {
 	if err != nil {
 		return "", fmt.Errorf("fail to decode the token, token: %s", token)
 	}
-	secrets := strings.SplitN(rawToken, util.CredentialSeperator, 2)
+	secrets := strings.SplitN(rawToken, util.CredentialSeparator, 2)
 	if len(secrets) < 2 {
 		return "", fmt.Errorf("fail to get user info from the raw token, raw token: %s", rawToken)
 	}
@@ -926,7 +926,7 @@ func translateOutputFields(outputFields []string, schema *schemapb.CollectionSch
 							expr.GetColumnExpr().GetInfo().GetNestedPath()[0] == outputFieldName {
 							return nil
 						}
-						return fmt.Errorf("not suppot getting subkeys of json field yet")
+						return fmt.Errorf("not support getting subkeys of json field yet")
 					})
 					if err != nil {
 						log.Info("parse output field name failed", zap.String("field name", outputFieldName))
@@ -1035,7 +1035,7 @@ func fillFieldsDataBySchema(schema *schemapb.CollectionSchema, insertMsg *msgstr
 	for _, data := range insertMsg.FieldsData {
 		fieldName := data.GetFieldName()
 		if dataNameSet.Contain(fieldName) {
-			return merr.WrapErrParameterDuplicateFieldData(fieldName, "The FieldDatas parameter being passed contains duplicate data for a field.")
+			return merr.WrapErrParameterDuplicateFieldData(fieldName, "The FieldData parameter being passed contains duplicate data for a field.")
 		}
 		dataNameSet.Insert(fieldName)
 	}
@@ -1333,7 +1333,7 @@ func getDefaultPartitionNames(ctx context.Context, dbName string, collectionName
 	for partitionName := range partitions {
 		splits := strings.Split(partitionName, "_")
 		if len(splits) < 2 {
-			err = fmt.Errorf("bad default partion name in partition ket mode: %s", partitionName)
+			err = fmt.Errorf("bad default partion name in partition kept mode: %s", partitionName)
 			return nil, err
 		}
 		index, err := strconv.ParseInt(splits[len(splits)-1], 10, 64)

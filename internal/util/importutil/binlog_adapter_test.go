@@ -234,7 +234,7 @@ func Test_BinlogAdapterDecodeDeleteLogs(t *testing.T) {
 		},
 	}
 
-	// use timetamp to filter the no.1 and no.2 deletions
+	// use timestamp to filter the no.1 and no.2 deletions
 	adapter.tsEndPoint = baseTimestamp + 1
 	deletions, err := adapter.decodeDeleteLogs(holder)
 	assert.NoError(t, err)

@@ -43,7 +43,7 @@ var _ flowgraph.Node = (*ddNode)(nil)
 
 // ddNode filters messages from message streams.
 //
-// ddNode recives all the messages from message stream dml channels, including insert messages,
+// ddNode receives all the messages from message stream dml channels, including insert messages,
 //
 //	delete messages and ddl messages like CreateCollectionMsg and DropCollectionMsg.
 //
@@ -167,14 +167,14 @@ func (ddn *ddNode) Operate(in []Msg) []Msg {
 				log.Info("drop partition msg received",
 					zap.Int64("collectionID", dpMsg.GetCollectionID()),
 					zap.Int64("partitionID", dpMsg.GetPartitionID()),
-					zap.String("vChanneName", ddn.vChannelName))
+					zap.String("vChannelName", ddn.vChannelName))
 				fgMsg.dropPartitions = append(fgMsg.dropPartitions, dpMsg.PartitionID)
 			}
 
 		case commonpb.MsgType_Insert:
 			imsg := msg.(*msgstream.InsertMsg)
 			if imsg.CollectionID != ddn.collectionID {
-				log.Info("filter invalid insert message, collection mis-match",
+				log.Info("filter invalid insert message, collection miss-match",
 					zap.Int64("Get collID", imsg.CollectionID),
 					zap.Int64("Expected collID", ddn.collectionID))
 				continue
@@ -211,7 +211,7 @@ func (ddn *ddNode) Operate(in []Msg) []Msg {
 				zap.String("vChannelName", ddn.vChannelName))
 
 			if dmsg.CollectionID != ddn.collectionID {
-				log.Warn("filter invalid DeleteMsg, collection mis-match",
+				log.Warn("filter invalid DeleteMsg, collection miss-match",
 					zap.Int64("Get collID", dmsg.CollectionID),
 					zap.Int64("Expected collID", ddn.collectionID))
 				continue

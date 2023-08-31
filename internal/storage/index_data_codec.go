@@ -85,7 +85,7 @@ func (codec *IndexFileBinlogCodec) serializeImpl(
 
 	return &Blob{
 		Key: key,
-		//Key:   strconv.Itoa(len(datas)),
+		//Key:   strconv.Itoa(len(data)),
 		Value: buffer,
 	}, nil
 }
@@ -124,7 +124,7 @@ func (codec *IndexFileBinlogCodec) Serialize(
 	indexParams map[string]string,
 	indexName string,
 	indexID UniqueID,
-	datas []*Blob,
+	data []*Blob,
 ) ([]*Blob, error) {
 
 	var err error
@@ -141,8 +141,8 @@ func (codec *IndexFileBinlogCodec) Serialize(
 	}
 	blobs = append(blobs, indexParamBlob)
 
-	for pos := range datas {
-		blob, err := codec.serializeImpl(indexBuildID, version, collectionID, partitionID, segmentID, fieldID, indexName, indexID, datas[pos].Key, datas[pos].Value, ts)
+	for pos := range data {
+		blob, err := codec.serializeImpl(indexBuildID, version, collectionID, partitionID, segmentID, fieldID, indexName, indexID, data[pos].Key, data[pos].Value, ts)
 		if err != nil {
 			return nil, err
 		}
@@ -162,14 +162,14 @@ func (codec *IndexFileBinlogCodec) DeserializeImpl(blobs []*Blob) (
 	indexParams map[string]string,
 	indexName string,
 	indexID UniqueID,
-	datas []*Blob,
+	data []*Blob,
 	err error,
 ) {
 	if len(blobs) == 0 {
 		return 0, 0, 0, 0, 0, 0, nil, "", 0, nil, errors.New("blobs is empty")
 	}
 	indexParams = make(map[string]string)
-	datas = make([]*Blob, 0)
+	data = make([]*Blob, 0)
 
 	for _, blob := range blobs {
 		binlogReader, err := NewBinlogReader(blob.Value)
@@ -237,7 +237,7 @@ func (codec *IndexFileBinlogCodec) DeserializeImpl(blobs []*Blob) (
 				} else {
 					blob := &Blob{Key: key}
 					blob.Value = content
-					datas = append(datas, blob)
+					data = append(data, blob)
 				}
 
 			case schemapb.DataType_String:
@@ -262,7 +262,7 @@ func (codec *IndexFileBinlogCodec) DeserializeImpl(blobs []*Blob) (
 				} else {
 					blob := &Blob{Key: key}
 					blob.Value = contentByte
-					datas = append(datas, blob)
+					data = append(data, blob)
 				}
 			}
 			eventReader.Close()
@@ -271,18 +271,18 @@ func (codec *IndexFileBinlogCodec) DeserializeImpl(blobs []*Blob) (
 
 	}
 
-	return indexBuildID, version, collectionID, partitionID, segmentID, fieldID, indexParams, indexName, indexID, datas, nil
+	return indexBuildID, version, collectionID, partitionID, segmentID, fieldID, indexParams, indexName, indexID, data, nil
 }
 
 func (codec *IndexFileBinlogCodec) Deserialize(blobs []*Blob) (
-	datas []*Blob,
+	data []*Blob,
 	indexParams map[string]string,
 	indexName string,
 	indexID UniqueID,
 	err error,
 ) {
-	_, _, _, _, _, _, indexParams, indexName, indexID, datas, err = codec.DeserializeImpl(blobs)
-	return datas, indexParams, indexName, indexID, err
+	_, _, _, _, _, _, indexParams, indexName, indexID, data, err = codec.DeserializeImpl(blobs)
+	return data, indexParams, indexName, indexID, err
 }
 
 // IndexCodec can serialize and deserialize index
