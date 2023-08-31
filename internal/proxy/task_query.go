@@ -501,7 +501,7 @@ func (t *queryTask) queryShard(ctx context.Context, nodeID int64, qn types.Query
 	return nil
 }
 
-// IDs2Expr converts ids slices to bool expresion with specified field name
+// IDs2Expr converts ids slices to bool expression with specified field name
 func IDs2Expr(fieldName string, ids *schemapb.IDs) string {
 	var idsStr string
 	switch ids.GetIdField().(type) {
@@ -518,7 +518,7 @@ func IDs2Expr(fieldName string, ids *schemapb.IDs) string {
 }
 
 func reduceRetrieveResults(ctx context.Context, retrieveResults []*internalpb.RetrieveResults, queryParams *queryParams) (*milvuspb.QueryResults, error) {
-	log.Ctx(ctx).Debug("reduceInternelRetrieveResults", zap.Int("len(retrieveResults)", len(retrieveResults)))
+	log.Ctx(ctx).Debug("reduceInternalRetrieveResults", zap.Int("len(retrieveResults)", len(retrieveResults)))
 	var (
 		ret = &milvuspb.QueryResults{}
 

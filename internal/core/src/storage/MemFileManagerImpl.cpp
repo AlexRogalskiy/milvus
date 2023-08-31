@@ -94,11 +94,11 @@ MemFileManagerImpl::LoadIndexToMemory(
     std::vector<std::string> batch_files;
 
     auto LoadBatchIndexFiles = [&]() {
-        auto index_datas = GetObjectData(rcm_.get(), batch_files);
+        auto index_data = GetObjectData(rcm_.get(), batch_files);
         for (size_t idx = 0; idx < batch_files.size(); ++idx) {
             auto file_name =
                 batch_files[idx].substr(batch_files[idx].find_last_of('/') + 1);
-            file_to_index_data[file_name] = index_datas[idx];
+            file_to_index_data[file_name] = index_data[idx];
         }
     };
 
@@ -132,12 +132,12 @@ MemFileManagerImpl::CacheRawDataToMemory(
     auto parallel_degree =
         uint64_t(DEFAULT_FIELD_MAX_MEMORY_LIMIT / FILE_SLICE_SIZE);
     std::vector<std::string> batch_files;
-    std::vector<FieldDataPtr> field_datas;
+    std::vector<FieldDataPtr> field_data;
 
     auto FetchRawData = [&]() {
-        auto raw_datas = GetObjectData(rcm_.get(), batch_files);
-        for (auto& data : raw_datas) {
-            field_datas.emplace_back(data);
+        auto raw_data = GetObjectData(rcm_.get(), batch_files);
+        for (auto& data : raw_data) {
+            field_data.emplace_back(data);
         }
     };
 
@@ -152,9 +152,9 @@ MemFileManagerImpl::CacheRawDataToMemory(
         FetchRawData();
     }
 
-    AssertInfo(field_datas.size() == remote_files.size(),
+    AssertInfo(field_data.size() == remote_files.size(),
                "inconsistent file num and raw data num!");
-    return field_datas;
+    return field_data;
 }
 
 std::optional<bool>

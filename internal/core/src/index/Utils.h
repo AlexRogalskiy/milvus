@@ -111,11 +111,11 @@ ParseConfigFromIndexParams(
     const std::map<std::string, std::string>& index_params);
 
 void
-AssembleIndexDatas(std::map<std::string, storage::FieldDataPtr>& index_datas);
+AssembleIndexData(std::map<std::string, storage::FieldDataPtr>& index_data);
 
 void
-AssembleIndexDatas(
-    std::map<std::string, storage::FieldDataChannelPtr>& index_datas,
+AssembleIndexData(
+    std::map<std::string, storage::FieldDataChannelPtr>& index_data,
     std::unordered_map<std::string, storage::FieldDataPtr>& result);
 
 // On Linux, read() (and similar system calls) will transfer at most 0x7ffff000 (2,147,479,552) bytes once

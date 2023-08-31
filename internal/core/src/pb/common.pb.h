@@ -445,14 +445,14 @@ inline bool DslType_Parse(
     DslType_descriptor(), name, value);
 }
 enum CompactionState : int {
-  UndefiedState = 0,
+  UndefinedState = 0,
   Executing = 1,
   Completed = 2,
   CompactionState_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
   CompactionState_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
 };
 bool CompactionState_IsValid(int value);
-constexpr CompactionState CompactionState_MIN = UndefiedState;
+constexpr CompactionState CompactionState_MIN = UndefinedState;
 constexpr CompactionState CompactionState_MAX = Completed;
 constexpr int CompactionState_ARRAYSIZE = CompactionState_MAX + 1;
 

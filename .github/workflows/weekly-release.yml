@@ -66,6 +66,6 @@ jobs:
         prerelease: true
         tag_name: "v2.2-testing-${{ env.build }}"
         release_name: "milvus-2.2-testing-${{ env.build }}"
-        commitish: "${{ env.sha }}"
+        committish: "${{ env.sha }}"
 
 

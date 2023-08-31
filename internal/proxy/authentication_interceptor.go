@@ -28,7 +28,7 @@ func parseMD(authorization []string) (username, password string) {
 		log.Warn("fail to decode the token", zap.Error(err))
 		return
 	}
-	secrets := strings.SplitN(rawToken, util.CredentialSeperator, 2)
+	secrets := strings.SplitN(rawToken, util.CredentialSeparator, 2)
 	if len(secrets) < 2 {
 		log.Warn("invalid token format, length of secrets less than 2")
 		return
@@ -71,7 +71,7 @@ func AuthenticationInterceptor(ctx context.Context) (context.Context, error) {
 			username, password := parseMD(md[strings.ToLower(util.HeaderAuthorize)])
 			if !passwordVerify(ctx, username, password, globalMetaCache) {
 				msg := fmt.Sprintf("username: %s, password: %s", username, password)
-				return nil, merr.WrapErrParameterInvalid("vaild username and password", msg, "auth check failure, please check username and password are correct")
+				return nil, merr.WrapErrParameterInvalid("valid username and password", msg, "auth check failure, please check username and password are correct")
 			}
 			metrics.UserRPCCounter.WithLabelValues(username).Inc()
 		}

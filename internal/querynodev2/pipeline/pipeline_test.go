@@ -37,7 +37,7 @@ import (
 
 type PipelineTestSuite struct {
 	suite.Suite
-	//datas
+	//data
 	collectionName   string
 	collectionID     int64
 	partitionIDs     []int64
@@ -131,7 +131,7 @@ func (suite *PipelineTestSuite) TestBasic() {
 				}
 			}
 		})
-	//build pipleine
+	//build pipeline
 	manager := &segments.Manager{
 		Collection: suite.collectionManager,
 		Segment:    suite.segmentManager,

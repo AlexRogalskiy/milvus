@@ -827,7 +827,7 @@ func (m *MetaCache) GetShards(ctx context.Context, withCache bool, database, col
 
 	info, err = m.getFullCollectionInfo(ctx, database, collectionName, collectionID)
 	if err != nil {
-		return nil, fmt.Errorf("failed to get shards, collectionName %s, colectionID %d not found", collectionName, collectionID)
+		return nil, fmt.Errorf("failed to get shards, collectionName %s, collectionID %d not found", collectionName, collectionID)
 	}
 	// lock leader
 	info.leaderMutex.Lock()

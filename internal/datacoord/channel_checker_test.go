@@ -232,7 +232,7 @@ func TestChannelStateTimer_parses(t *testing.T) {
 			{datapb.ChannelWatchState_WatchSuccess, watchSuccessAck},
 			{datapb.ChannelWatchState_WatchFailure, watchFailAck},
 			{datapb.ChannelWatchState_ToWatch, watchTimeoutAck},
-			{datapb.ChannelWatchState_Uncomplete, watchTimeoutAck},
+			{datapb.ChannelWatchState_Incomplete, watchTimeoutAck},
 			{datapb.ChannelWatchState_ReleaseSuccess, releaseSuccessAck},
 			{datapb.ChannelWatchState_ReleaseFailure, releaseFailAck},
 			{datapb.ChannelWatchState_ToRelease, releaseTimeoutAck},

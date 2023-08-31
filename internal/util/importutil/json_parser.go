@@ -174,7 +174,7 @@ func (p *JSONParser) verifyRow(raw interface{}) (map[storage.FieldID]interface{}
 	if len(row) != len(p.collectionInfo.Name2FieldID) {
 		for k, v := range p.collectionInfo.Name2FieldID {
 			if (p.collectionInfo.DynamicField != nil) && (v == p.collectionInfo.DynamicField.GetFieldID()) {
-				// ignore dyanmic field, user don't have to provide values for dynamic field
+				// ignore dynamic field, user don't have to provide values for dynamic field
 				continue
 			}
 

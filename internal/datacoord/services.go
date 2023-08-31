@@ -960,7 +960,7 @@ func (s *Server) ShowConfigurations(ctx context.Context, req *internalpb.ShowCon
 				ErrorCode: commonpb.ErrorCode_UnexpectedError,
 				Reason:    msgDataCoordIsUnhealthy(paramtable.GetNodeID()),
 			},
-			Configuations: nil,
+			Configurations: nil,
 		}, nil
 	}
 
@@ -978,7 +978,7 @@ func (s *Server) ShowConfigurations(ctx context.Context, req *internalpb.ShowCon
 			ErrorCode: commonpb.ErrorCode_Success,
 			Reason:    "",
 		},
-		Configuations: configList,
+		Configurations: configList,
 	}, nil
 }
 

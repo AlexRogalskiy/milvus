@@ -304,7 +304,7 @@ class TestDatabaseOperation(TestcaseBase):
     @pytest.mark.skip(reason="https://github.com/milvus-io/milvus/issues/24182")
     def test_create_db_collections_exceeds_max_num(self):
         """
-        target: test create collection in different db and each db's colelction within max,
+        target: test create collection in different db and each db's collection within max,
                 but total exceeds max collection num
         method: 1. create a db and create 10 collections in db
                 2. create another db and create collection larger than (max - 10) but less than collectionPerDb
@@ -558,7 +558,7 @@ class TestDatabaseOtherApi(TestcaseBase):
     @pytest.mark.parametrize("invalid_db_name", [(), [], 1, [1, "2", 3], (1,), {1: 1}])
     def test_connect_invalid_db_name(self, host, port, invalid_db_name):
         """
-        target: test conenct with invalid db name
+        target: test connect with invalid db name
         method: connect with invalid db name
         expected: connect fail
         """
@@ -767,7 +767,7 @@ class TestDatabaseOtherApi(TestcaseBase):
         page_res, _ = self.collection_wrap.query(expr, offset=1000, limit=1000)
         assert len(page_res) == 1000
 
-        # delte and query
+        # delete and query
         del_expr = f'{ct.default_int64_field_name} in [0, {ct.default_nb}]'
         self.collection_wrap.delete(del_expr)
         self.collection_wrap.query(del_expr, check_task=CheckTasks.check_query_empty)

@@ -216,7 +216,7 @@ func getAckType(state datapb.ChannelWatchState) ackType {
 		return releaseSuccessAck
 	case datapb.ChannelWatchState_ReleaseFailure:
 		return releaseFailAck
-	case datapb.ChannelWatchState_ToWatch, datapb.ChannelWatchState_Uncomplete: // unchange watch states generates timeout acks
+	case datapb.ChannelWatchState_ToWatch, datapb.ChannelWatchState_Incomplete: // unchange watch states generates timeout acks
 		return watchTimeoutAck
 	case datapb.ChannelWatchState_ToRelease: // unchange watch states generates timeout acks
 		return releaseTimeoutAck

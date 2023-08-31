@@ -804,7 +804,7 @@ func checkBinlogs(binlogType storage.BinlogType, segmentID typeutil.UniqueID, lo
 	}
 }
 
-func hasSepcialStatslog(logs *datapb.FieldBinlog) bool {
+func hasSpecialStatslog(logs *datapb.FieldBinlog) bool {
 	for _, statslog := range logs.Binlogs {
 		_, logidx := path.Split(statslog.LogPath)
 		if logidx == storage.CompoundStatsType.LogIdx() {
@@ -822,7 +822,7 @@ func buildBinlogKvsWithLogID(collectionID, partitionID, segmentID typeutil.Uniqu
 	checkBinlogs(storage.StatsBinlog, segmentID, statslogs)
 	// check stats log and bin log size match
 	// num of stats log may one more than num of binlogs if segment flushed and merged stats log
-	if !ignoreNumberCheck && len(binlogs) != 0 && len(statslogs) != 0 && !hasSepcialStatslog(statslogs[0]) {
+	if !ignoreNumberCheck && len(binlogs) != 0 && len(statslogs) != 0 && !hasSpecialStatslog(statslogs[0]) {
 		if len(binlogs[0].GetBinlogs()) != len(statslogs[0].GetBinlogs()) {
 			log.Warn("find invalid segment while bin log size didn't match stat log size",
 				zap.Int64("collection", collectionID),

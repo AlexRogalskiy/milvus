@@ -706,10 +706,10 @@ func decodeSearchResults(ctx context.Context, searchResults []*internalpb.Search
 
 func checkSearchResultData(data *schemapb.SearchResultData, nq int64, topk int64) error {
 	if data.NumQueries != nq {
-		return fmt.Errorf("search result's nq(%d) mis-match with %d", data.NumQueries, nq)
+		return fmt.Errorf("search result's nq(%d) miss-match with %d", data.NumQueries, nq)
 	}
 	if data.TopK != topk {
-		return fmt.Errorf("search result's topk(%d) mis-match with %d", data.TopK, topk)
+		return fmt.Errorf("search result's topk(%d) miss-match with %d", data.TopK, topk)
 	}
 
 	pkHitNum := typeutil.GetSizeOfIDs(data.GetIds())

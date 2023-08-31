@@ -786,7 +786,7 @@ func (p *BinlogAdapter) dispatchBoolToShards(data []bool, memoryData []ShardData
 		return fmt.Errorf("bool field row count %d is not equal to shard list row count %d", len(data), len(shardList))
 	}
 
-	// dispatch entities acoording to shard list
+	// dispatch entities according to shard list
 	for i, val := range data {
 		shardID := shardList[i]
 		if shardID < 0 {
@@ -820,7 +820,7 @@ func (p *BinlogAdapter) dispatchInt8ToShards(data []int8, memoryData []ShardData
 		return fmt.Errorf("int8 field row count %d is not equal to shard list row count %d", len(data), len(shardList))
 	}
 
-	// dispatch entity acoording to shard list
+	// dispatch entity according to shard list
 	for i, val := range data {
 		shardID := shardList[i]
 		if shardID < 0 {
@@ -854,7 +854,7 @@ func (p *BinlogAdapter) dispatchInt16ToShards(data []int16, memoryData []ShardDa
 		return fmt.Errorf("int16 field row count %d is not equal to shard list row count %d", len(data), len(shardList))
 	}
 
-	// dispatch entities acoording to shard list
+	// dispatch entities according to shard list
 	for i, val := range data {
 		shardID := shardList[i]
 		if shardID < 0 {
@@ -888,7 +888,7 @@ func (p *BinlogAdapter) dispatchInt32ToShards(data []int32, memoryData []ShardDa
 		return fmt.Errorf("int32 field row count %d is not equal to shard list row count %d", len(data), len(shardList))
 	}
 
-	// dispatch entities acoording to shard list
+	// dispatch entities according to shard list
 	for i, val := range data {
 		shardID := shardList[i]
 		if shardID < 0 {
@@ -922,7 +922,7 @@ func (p *BinlogAdapter) dispatchInt64ToShards(data []int64, memoryData []ShardDa
 		return fmt.Errorf("int64 field row count %d is not equal to shard list row count %d", len(data), len(shardList))
 	}
 
-	// dispatch entities acoording to shard list
+	// dispatch entities according to shard list
 	for i, val := range data {
 		shardID := shardList[i]
 		if shardID < 0 {
@@ -956,7 +956,7 @@ func (p *BinlogAdapter) dispatchFloatToShards(data []float32, memoryData []Shard
 		return fmt.Errorf("float field row count %d is not equal to shard list row count %d", len(data), len(shardList))
 	}
 
-	// dispatch entities acoording to shard list
+	// dispatch entities according to shard list
 	for i, val := range data {
 		shardID := shardList[i]
 		if shardID < 0 {
@@ -990,7 +990,7 @@ func (p *BinlogAdapter) dispatchDoubleToShards(data []float64, memoryData []Shar
 		return fmt.Errorf("double field row count %d is not equal to shard list row count %d", len(data), len(shardList))
 	}
 
-	// dispatch entities acoording to shard list
+	// dispatch entities according to shard list
 	for i, val := range data {
 		shardID := shardList[i]
 		if shardID < 0 {
@@ -1024,7 +1024,7 @@ func (p *BinlogAdapter) dispatchVarcharToShards(data []string, memoryData []Shar
 		return fmt.Errorf("varchar field row count %d is not equal to shard list row count %d", len(data), len(shardList))
 	}
 
-	// dispatch entities acoording to shard list
+	// dispatch entities according to shard list
 	for i, val := range data {
 		shardID := shardList[i]
 		if shardID < 0 {
@@ -1058,7 +1058,7 @@ func (p *BinlogAdapter) dispatchBytesToShards(data [][]byte, memoryData []ShardD
 		return fmt.Errorf("varchar JSON row count %d is not equal to shard list row count %d", len(data), len(shardList))
 	}
 
-	// dispatch entities acoording to shard list
+	// dispatch entities according to shard list
 	for i, val := range data {
 		shardID := shardList[i]
 		if shardID < 0 {
@@ -1095,7 +1095,7 @@ func (p *BinlogAdapter) dispatchBinaryVecToShards(data []byte, dim int, memoryDa
 		return fmt.Errorf("binary vector field row count %d is not equal to shard list row count %d", len(data), len(shardList))
 	}
 
-	// dispatch entities acoording to shard list
+	// dispatch entities according to shard list
 	for i := 0; i < count; i++ {
 		shardID := shardList[i]
 		if shardID < 0 {
@@ -1141,7 +1141,7 @@ func (p *BinlogAdapter) dispatchFloatVecToShards(data []float32, dim int, memory
 		return fmt.Errorf("float vector field row count %d is not equal to shard list row count %d", len(data), len(shardList))
 	}
 
-	// dispatch entities acoording to shard list
+	// dispatch entities according to shard list
 	for i := 0; i < count; i++ {
 		shardID := shardList[i]
 		if shardID < 0 {

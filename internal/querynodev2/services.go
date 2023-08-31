@@ -1060,7 +1060,7 @@ func (node *QueryNode) ShowConfigurations(ctx context.Context, req *internalpb.S
 
 		return &internalpb.ShowConfigurationsResponse{
 			Status:        merr.Status(err),
-			Configuations: nil,
+			Configurations: nil,
 		}, nil
 	}
 	defer node.lifetime.Done()
@@ -1079,7 +1079,7 @@ func (node *QueryNode) ShowConfigurations(ctx context.Context, req *internalpb.S
 			ErrorCode: commonpb.ErrorCode_Success,
 			Reason:    "",
 		},
-		Configuations: configList,
+		Configurations: configList,
 	}, nil
 }
 

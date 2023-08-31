@@ -94,7 +94,7 @@ func (nc *Consumer) Seek(id mqwrapper.MessageID, inclusive bool) error {
 		return err
 	}
 	if nc.sub != nil {
-		return errors.New("can not seek() on an initilized consumer")
+		return errors.New("can not seek() on an initialized consumer")
 	}
 	if nc.msgChan != nil {
 		return errors.New("Seek should be called before Chan")

@@ -128,6 +128,6 @@ func IsSystemField(fieldID int64) bool {
 }
 
 const (
-	// LatestVerision is the magic number for watch latest revision
+	// LatestVersion is the magic number for watch latest revision
 	LatestRevision = int64(-1)
 )

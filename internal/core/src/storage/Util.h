@@ -107,7 +107,7 @@ PutIndexData(ChunkManager* remote_chunk_manager,
              IndexMeta& index_meta);
 
 int64_t
-GetTotalNumRowsForFieldDatas(const std::vector<FieldDataPtr>& field_datas);
+GetTotalNumRowsForFieldData(const std::vector<FieldDataPtr>& field_data);
 
 size_t
 GetNumRowsForLoadInfo(const LoadFieldDataInfo& load_info);
@@ -133,7 +133,7 @@ CreateFieldData(const DataType& type,
                 int64_t total_num_rows = 0);
 
 int64_t
-GetByteSizeOfFieldDatas(const std::vector<FieldDataPtr>& field_datas);
+GetByteSizeOfFieldData(const std::vector<FieldDataPtr>& field_data);
 
 std::vector<storage::FieldDataPtr>
 CollectFieldDataChannel(storage::FieldDataChannelPtr& channel);

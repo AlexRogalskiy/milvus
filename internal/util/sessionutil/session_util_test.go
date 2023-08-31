@@ -383,7 +383,7 @@ func TestSession_String(t *testing.T) {
 	log.Debug("log session", zap.Any("session", s))
 }
 
-func TestSesssionMarshal(t *testing.T) {
+func TestSessionMarshal(t *testing.T) {
 	s := &Session{
 		ServerID:   1,
 		ServerName: "test",

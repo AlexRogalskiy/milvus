@@ -42,7 +42,7 @@ declare -A pod_map=(["querynode"]="queryNode" ["indexnode"]="indexNode" ["datano
 echo "install milvus"
 if [[ ${pod} != *"standalone"* ]];
 then
-    echo "insatll cluster"
+    echo "install cluster"
     helm install --wait --timeout 360s ${release} milvus/milvus --set ${pod_map[${pod}]}.replicas=$node_num -f ../cluster-values.yaml -n=${ns}
 fi
 

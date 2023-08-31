@@ -778,7 +778,7 @@ func TestGetCurUserFromContext(t *testing.T) {
 
 	root := "root"
 	password := "123456"
-	username, err := GetCurUserFromContext(GetContext(context.Background(), fmt.Sprintf("%s%s%s", root, util.CredentialSeperator, password)))
+	username, err := GetCurUserFromContext(GetContext(context.Background(), fmt.Sprintf("%s%s%s", root, util.CredentialSeparator, password)))
 	assert.NoError(t, err)
 	assert.Equal(t, "root", username)
 }
@@ -1197,7 +1197,7 @@ func Test_InsertTaskfillFieldsDataBySchema(t *testing.T) {
 	assert.ErrorIs(t, merr.ErrParameterInvalid, err)
 	assert.Equal(t, len(case5.insertMsg.FieldsData), 3)
 
-	// duplicate field datas
+	// duplicate field data
 	case5.insertMsg.FieldsData = []*schemapb.FieldData{
 		{
 			FieldName: "a",

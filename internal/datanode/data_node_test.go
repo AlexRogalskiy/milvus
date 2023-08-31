@@ -362,7 +362,7 @@ func TestWatchChannel(t *testing.T) {
 
 		info := datapb.ChannelWatchInfo{
 			Vchan: nil,
-			State: datapb.ChannelWatchState_Uncomplete,
+			State: datapb.ChannelWatchState_Incomplete,
 		}
 		bs, err := proto.Marshal(&info)
 		assert.NoError(t, err)
@@ -392,7 +392,7 @@ func TestWatchChannel(t *testing.T) {
 
 		info = datapb.ChannelWatchInfo{
 			Vchan: &datapb.VchannelInfo{ChannelName: ch},
-			State: datapb.ChannelWatchState_Uncomplete,
+			State: datapb.ChannelWatchState_Incomplete,
 		}
 		bs, err = proto.Marshal(&info)
 		assert.NoError(t, err)
@@ -436,7 +436,7 @@ func TestWatchChannel(t *testing.T) {
 
 		info := datapb.ChannelWatchInfo{
 			Vchan: &datapb.VchannelInfo{ChannelName: ch},
-			State: datapb.ChannelWatchState_Uncomplete,
+			State: datapb.ChannelWatchState_Incomplete,
 		}
 		bs, err := proto.Marshal(&info)
 		assert.NoError(t, err)
@@ -457,7 +457,7 @@ func TestWatchChannel(t *testing.T) {
 				DroppedSegments:     []*datapb.SegmentInfo{{ID: 3}},
 				UnflushedSegmentIds: []int64{1},
 			},
-			State: datapb.ChannelWatchState_Uncomplete,
+			State: datapb.ChannelWatchState_Incomplete,
 		}
 		bs, err := proto.Marshal(&info)
 		assert.NoError(t, err)

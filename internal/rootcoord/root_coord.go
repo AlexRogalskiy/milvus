@@ -1567,7 +1567,7 @@ func (c *Core) ShowConfigurations(ctx context.Context, req *internalpb.ShowConfi
 	if code, ok := c.checkHealthy(); !ok {
 		return &internalpb.ShowConfigurationsResponse{
 			Status:        merr.Status(merr.WrapErrServiceNotReady(code.String())),
-			Configuations: nil,
+			Configurations: nil,
 		}, nil
 	}
 
@@ -1585,7 +1585,7 @@ func (c *Core) ShowConfigurations(ctx context.Context, req *internalpb.ShowConfi
 			ErrorCode: commonpb.ErrorCode_Success,
 			Reason:    "",
 		},
-		Configuations: configList,
+		Configurations: configList,
 	}, nil
 }
 

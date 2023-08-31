@@ -34,7 +34,7 @@ type GroupChecker struct {
 	d        time.Duration                              // check duration
 	t        *time.Ticker                               // internal ticker
 	ch       chan struct{}                              // closing signal
-	lastest  *typeutil.ConcurrentMap[string, time.Time] // map member name => lastest report time
+	latest  *typeutil.ConcurrentMap[string, time.Time] // map member name => latest report time
 	initOnce sync.Once
 	stopOnce sync.Once
 
@@ -63,7 +63,7 @@ func (gc *GroupChecker) work() {
 		}
 
 		var list []string
-		gc.lastest.Range(func(name string, ts time.Time) bool {
+		gc.latest.Range(func(name string, ts time.Time) bool {
 			if time.Since(ts) > gc.d {
 				list = append(list, name)
 			}
@@ -77,12 +77,12 @@ func (gc *GroupChecker) work() {
 
 // Check updates the latest timestamp for provided name
 func (gc *GroupChecker) Check(name string) {
-	gc.lastest.Insert(name, time.Now())
+	gc.latest.Insert(name, time.Now())
 }
 
 // Remove deletes name from watch list
 func (gc *GroupChecker) Remove(name string) {
-	gc.lastest.GetAndRemove(name)
+	gc.latest.GetAndRemove(name)
 }
 
 // Stop closes the GroupChecker
@@ -101,7 +101,7 @@ func GetGroupChecker(groupName string, duration time.Duration, fn func([]string)
 		groupName: groupName,
 		d:         duration,
 		fn:        fn,
-		lastest:   typeutil.NewConcurrentMap[string, time.Time](),
+		latest:   typeutil.NewConcurrentMap[string, time.Time](),
 	}
 	gc, loaded := groups.GetOrInsert(groupName, gc)
 	if !loaded {

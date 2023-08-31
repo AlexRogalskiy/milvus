@@ -345,7 +345,7 @@ func (ms *mqMsgStream) getTsMsgFromConsumerMsg(msg mqwrapper.Message) (TsMsg, er
 		return nil, fmt.Errorf("failed to unmarshal message header, err %s", err.Error())
 	}
 	if header.Base == nil {
-		return nil, fmt.Errorf("failed to unmarshal message, header is uncomplete")
+		return nil, fmt.Errorf("failed to unmarshal message, header is incomplete")
 	}
 	tsMsg, err := ms.unmarshal.Unmarshal(msg.Payload(), header.Base.MsgType)
 	if err != nil {
@@ -781,7 +781,7 @@ func (ms *MqTtMsgStream) Seek(msgPositions []*msgpb.MsgPosition) error {
 		var ok bool
 		consumer, ok = ms.consumers[mp.ChannelName]
 		if !ok {
-			return fmt.Errorf("please subcribe the channel, channel name =%s", mp.ChannelName)
+			return fmt.Errorf("please subscribe the channel, channel name =%s", mp.ChannelName)
 		}
 
 		if consumer == nil {

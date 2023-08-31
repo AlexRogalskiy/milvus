@@ -1040,7 +1040,7 @@ func TestInsertBufferNode_updateSegmentStates(te *testing.T) {
 	defer cancel()
 	cm := storage.NewLocalChunkManager(storage.RootPath(insertNodeTestDir))
 	defer cm.RemoveWithPrefix(ctx, cm.RootPath())
-	invalideTests := []struct {
+	invalidTests := []struct {
 		channelCollID UniqueID
 
 		inCollID    UniqueID
@@ -1050,7 +1050,7 @@ func TestInsertBufferNode_updateSegmentStates(te *testing.T) {
 		{1, 9, 100, "collectionID mismatch"},
 	}
 
-	for _, test := range invalideTests {
+	for _, test := range invalidTests {
 		channel := newChannel("channel", test.channelCollID, nil, &RootCoordFactory{pkType: schemapb.DataType_Int64}, cm)
 
 		ibNode := &insertBufferNode{

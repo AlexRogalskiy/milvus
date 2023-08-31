@@ -731,7 +731,7 @@ func (s *Server) ShowConfigurations(ctx context.Context, req *internalpb.ShowCon
 			ErrorCode: commonpb.ErrorCode_Success,
 			Reason:    "",
 		},
-		Configuations: configList,
+		Configurations: configList,
 	}, nil
 }
 
@@ -1159,7 +1159,7 @@ func (s *Server) TransferReplica(ctx context.Context, req *querypb.TransferRepli
 	replicas = s.meta.ReplicaManager.GetByCollection(req.GetCollectionID())
 	if (req.GetSourceResourceGroup() == meta.DefaultResourceGroupName || req.GetTargetResourceGroup() == meta.DefaultResourceGroupName) &&
 		len(replicas) != int(req.GetNumReplica()) {
-		err := merr.WrapErrParameterInvalid("tranfer all replicas from/to default resource group",
+		err := merr.WrapErrParameterInvalid("transfer all replicas from/to default resource group",
 			fmt.Sprintf("try to transfer %d replicas from/to but %d replicas exist", req.GetNumReplica(), len(replicas)))
 		return merr.Status(err), nil
 	}

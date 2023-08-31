@@ -82,7 +82,7 @@ func Test_BadLatestMessageID(t *testing.T) {
 	assert.Error(t, err)
 }
 
-func TestComsumeMessage(t *testing.T) {
+func TestConsumeMessage(t *testing.T) {
 	client, err := createNmqClient()
 	assert.NoError(t, err)
 	defer client.Close()

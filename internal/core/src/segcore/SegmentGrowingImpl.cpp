@@ -171,7 +171,7 @@ SegmentGrowingImpl::LoadFieldData(const LoadFieldDataInfo& infos) {
         auto& pool =
             ThreadPools::GetThreadPool(milvus::ThreadPoolPriority::MIDDLE);
         auto load_future =
-            pool.Submit(LoadFieldDatasFromRemote, insert_files, channel);
+            pool.Submit(LoadFieldDataFromRemote, insert_files, channel);
         auto field_data = CollectFieldDataChannel(channel);
         if (field_id == TimestampFieldID) {
             // step 2: sort timestamp
@@ -213,7 +213,7 @@ SegmentGrowingImpl::LoadFieldData(const LoadFieldDataInfo& infos) {
             SegmentInternalInterface::set_field_avg_size(
                 field_id,
                 num_rows,
-                storage::GetByteSizeOfFieldDatas(field_data));
+                storage::GetByteSizeOfFieldData(field_data));
         }
     }
 
