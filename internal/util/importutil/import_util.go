@@ -157,7 +157,7 @@ type Validator struct {
 	fieldID     int64                                                //field ID
 }
 
-// initValidators constructs valiator methods and data conversion methods
+// initValidators constructs validator methods and data conversion methods
 func initValidators(collectionSchema *schemapb.CollectionSchema, validators map[storage.FieldID]*Validator) error {
 	if collectionSchema == nil {
 		return errors.New("collection schema is nil")
@@ -358,7 +358,7 @@ func initValidators(collectionSchema *schemapb.CollectionSchema, validators map[
 				return nil
 			}
 		default:
-			return fmt.Errorf("unsupport data type: %s", getTypeName(collectionSchema.Fields[i].DataType))
+			return fmt.Errorf("unsupported data type: %s", getTypeName(collectionSchema.Fields[i].DataType))
 		}
 	}
 

@@ -790,7 +790,7 @@ func (t *compactionTask) injectDone(success bool) {
 	}
 }
 
-// TODO copy maybe expensive, but this seems to be the only convinent way.
+// TODO copy maybe expensive, but this seems to be the only convenient way.
 func interface2FieldData(schemaDataType schemapb.DataType, content []interface{}, numRows int64) (storage.FieldData, error) {
 	var rst storage.FieldData
 	switch schemaDataType {
@@ -966,7 +966,7 @@ func (t *compactionTask) getSegmentMeta(segID UniqueID) (UniqueID, UniqueID, *et
 	}
 
 	// TODO current compaction timestamp replace zero? why?
-	//  Bad desgin of describe collection.
+	//  Bad design of describe collection.
 	sch, err := t.getCollectionSchema(collID, 0)
 	if err != nil {
 		return -1, -1, nil, err

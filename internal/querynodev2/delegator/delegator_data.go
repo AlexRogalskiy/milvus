@@ -137,7 +137,7 @@ func (sd *shardDelegator) ProcessInsert(insertRecords map[int64]*InsertData) {
 
 // ProcessDelete handles delete data in delegator.
 // delegator puts deleteData into buffer first,
-// then dispatch data to segments acoording to the result of pkOracle.
+// then dispatch data to segments according to the result of pkOracle.
 func (sd *shardDelegator) ProcessDelete(deleteData []*DeleteData, ts uint64) {
 	method := "ProcessDelete"
 	tr := timerecord.NewTimeRecorder(method)

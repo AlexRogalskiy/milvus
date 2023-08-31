@@ -196,17 +196,17 @@ class ConcurrentVectorImpl : public VectorBase {
     }
 
     void
-    fill_chunk_data(const std::vector<storage::FieldDataPtr>& datas)
+    fill_chunk_data(const std::vector<storage::FieldDataPtr>& data)
         override {  // used only for sealed segment
         AssertInfo(chunks_.size() == 0, "no empty concurrent vector");
 
         int64_t element_count = 0;
-        for (auto& field_data : datas) {
+        for (auto& field_data : data) {
             element_count += field_data->get_num_rows();
         }
         chunks_.emplace_to_at_least(1, Dim * element_count);
         int64_t offset = 0;
-        for (auto& field_data : datas) {
+        for (auto& field_data : data) {
             auto num_rows = field_data->get_num_rows();
             set_data(
                 offset, static_cast<const Type*>(field_data->Data()), num_rows);
@@ -216,8 +216,8 @@ class ConcurrentVectorImpl : public VectorBase {
 
     void
     set_data_raw(ssize_t element_offset,
-                 const std::vector<storage::FieldDataPtr>& datas) override {
-        for (auto& field_data : datas) {
+                 const std::vector<storage::FieldDataPtr>& data) override {
+        for (auto& field_data : data) {
             auto num_rows = field_data->get_num_rows();
             set_data_raw(element_offset, field_data->Data(), num_rows);
             element_offset += num_rows;

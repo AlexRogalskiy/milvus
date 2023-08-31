@@ -334,7 +334,7 @@ func (rmq *rocksmq) Info() bool {
 		for _, consumer := range consumerList {
 			consumerPosition, ok := rmq.getCurrentID(consumer.Topic, consumer.GroupName)
 			if !ok {
-				log.Error("some group not regist", zap.String("topic", consumer.Topic), zap.String("groupName", consumer.GroupName))
+				log.Error("some group not register", zap.String("topic", consumer.Topic), zap.String("groupName", consumer.GroupName))
 				continue
 			}
 			if minConsumerPosition == UniqueID(-1) || consumerPosition < minConsumerPosition {
@@ -750,7 +750,7 @@ func (rmq *rocksmq) getLastID(topicName string) (int64, bool) {
 // Consume steps:
 // 1. Consume n messages from rocksdb
 // 2. Update current_id to the last consumed message
-// 3. Update ack informations in rocksdb
+// 3. Update ack information in rocksdb
 func (rmq *rocksmq) Consume(topicName string, groupName string, n int) ([]ConsumerMessage, error) {
 	if rmq.isClosed() {
 		return nil, errors.New(RmqNotServingErrMsg)
@@ -823,7 +823,7 @@ func (rmq *rocksmq) Consume(topicName string, groupName string, n int) ([]Consum
 		}
 
 		// between 2.2.0 and 2.3.0, the key of Payload is topic/properties/msgid/Payload
-		// will ingnore the property before 2.3.0, just make sure property empty is ok for 2.3
+		// will ignore the property before 2.3.0, just make sure property empty is ok for 2.3
 
 		// before 2.2.0, there have no properties in ProducerMessage and ConsumerMessage in rocksmq
 		// when produce before 2.2.0, but consume after 2.2.0, propertiesValue will be []
@@ -1078,7 +1078,7 @@ func (rmq *rocksmq) Notify(topicName, groupName string) {
 	}
 }
 
-// updateAckedInfo update acked informations for retention after consume
+// updateAckedInfo update acked information for retention after consume
 func (rmq *rocksmq) updateAckedInfo(topicName, groupName string, firstID UniqueID, lastID UniqueID) error {
 	// 1. Try to get the page id between first ID and last ID of ids
 	pageMsgPrefix := constructKey(PageMsgSizeTitle, topicName) + "/"

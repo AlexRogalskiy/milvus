@@ -38,7 +38,7 @@ static const int trace_id_size = 2 * opentelemetry::trace::TraceId::kSize;
 static bool enable_trace = true;
 
 void
-initTelementry(TraceConfig* config) {
+initTelemetry(TraceConfig* config) {
     std::unique_ptr<opentelemetry::sdk::trace::SpanExporter> exporter;
     if (config->exporter == "stdout") {
         exporter = ostream::OStreamSpanExporterFactory::Create();

@@ -112,7 +112,7 @@ func NewBinlogParser(ctx context.Context,
 //
 //	"backup/bak1/data/delta_log/435978159196147009/435978159196147010/435978159261483009/434574382554415105"
 //
-// In this function, we will constuct a list of SegmentFilesHolder objects, each SegmentFilesHolder holds the
+// In this function, we will construct a list of SegmentFilesHolder objects, each SegmentFilesHolder holds the
 // insert logs and delta logs of a segment.
 func (p *BinlogParser) constructSegmentHolders(insertlogRoot string, deltalogRoot string) ([]*SegmentFilesHolder, error) {
 	holders := make(map[int64]*SegmentFilesHolder)

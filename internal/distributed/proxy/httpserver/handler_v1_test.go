@@ -713,7 +713,7 @@ func TestInsertForDataType(t *testing.T) {
 		})
 	}
 	schemas = map[string]*schemapb.CollectionSchema{
-		"with unsupport field type": withUnsupportField(newCollectionSchema(generateCollectionSchema(false))),
+		"with unsupported field type": withUnsupportedField(newCollectionSchema(generateCollectionSchema(false))),
 	}
 	for name, schema := range schemas {
 		t.Run(name, func(t *testing.T) {

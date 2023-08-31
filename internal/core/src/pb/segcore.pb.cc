@@ -216,7 +216,7 @@ const char descriptor_table_protodef_segcore_2eproto[] PROTOBUF_SECTION_VARIABLE
   "ms\030\005 \003(\0132!.milvus.proto.common.KeyValueP"
   "air\022\025\n\ris_auto_index\030\006 \001(\010\022<\n\021user_index"
   "_params\030\007 \003(\0132!.milvus.proto.common.KeyV"
-  "aluePair\"j\n\023CollectionIndexMeta\022\030\n\020maxIn"
+  "valuePair\"j\n\023CollectionIndexMeta\022\030\n\020maxIn"
   "dexRowCount\030\001 \001(\003\0229\n\013index_metas\030\002 \003(\0132$"
   ".milvus.proto.segcore.FieldIndexMetaB6Z4"
   "github.com/milvus-io/milvus/internal/pro"

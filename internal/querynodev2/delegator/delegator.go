@@ -556,7 +556,7 @@ func (sd *shardDelegator) updateTSafe() {
 	sd.tsCond.L.Lock()
 	tsafe, err := sd.tsafeManager.Get(sd.vchannelName)
 	if err != nil {
-		log.Warn("tsafeManager failed to get lastest", zap.Error(err))
+		log.Warn("tsafeManager failed to get latest", zap.Error(err))
 	}
 	if tsafe > sd.latestTsafe.Load() {
 		sd.latestTsafe.Store(tsafe)
@@ -583,7 +583,7 @@ func NewShardDelegator(collectionID UniqueID, replicaID UniqueID, channel string
 	}
 
 	maxSegmentDeleteBuffer := paramtable.Get().QueryNodeCfg.MaxSegmentDeleteBuffer.GetAsInt64()
-	log.Info("Init delte cache", zap.Int64("maxSegmentCacheBuffer", maxSegmentDeleteBuffer), zap.Time("startTime", tsoutil.PhysicalTime(startTs)))
+	log.Info("Init delete cache", zap.Int64("maxSegmentCacheBuffer", maxSegmentDeleteBuffer), zap.Time("startTime", tsoutil.PhysicalTime(startTs)))
 
 	sd := &shardDelegator{
 		collectionID:   collectionID,

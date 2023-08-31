@@ -30,7 +30,7 @@ type CollectionInfo struct {
 	Schema   *schemapb.CollectionSchema
 	ShardNum int32
 
-	PartitionIDs []int64 // target partitions of bulkinsert, one partition for non-partition-key collection, or all partiitons for partition-key collection
+	PartitionIDs []int64 // target partitions of bulkinsert, one partition for non-partition-key collection, or all partitions for partition-key collection
 
 	PrimaryKey   *schemapb.FieldSchema
 	PartitionKey *schemapb.FieldSchema

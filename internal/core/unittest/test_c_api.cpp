@@ -138,12 +138,12 @@ generate_data(int N) {
 std::string
 generate_max_float_query_data(int all_nq, int max_float_nq) {
     assert(max_float_nq <= all_nq);
-    namespace ser = milvus::proto::common;
+    namespace set = milvus::proto::common;
     int dim = DIM;
-    ser::PlaceholderGroup raw_group;
+    set::PlaceholderGroup raw_group;
     auto value = raw_group.add_placeholders();
     value->set_tag("$0");
-    value->set_type(ser::PlaceholderType::FloatVector);
+    value->set_type(set::PlaceholderType::FloatVector);
     for (int i = 0; i < all_nq; ++i) {
         std::vector<float> vec;
         if (i < max_float_nq) {
@@ -163,14 +163,14 @@ generate_max_float_query_data(int all_nq, int max_float_nq) {
 
 std::string
 generate_query_data(int nq) {
-    namespace ser = milvus::proto::common;
+    namespace set = milvus::proto::common;
     std::default_random_engine e(67);
     int dim = DIM;
     std::normal_distribution<double> dis(0.0, 1.0);
-    ser::PlaceholderGroup raw_group;
+    set::PlaceholderGroup raw_group;
     auto value = raw_group.add_placeholders();
     value->set_tag("$0");
-    value->set_type(ser::PlaceholderType::FloatVector);
+    value->set_type(set::PlaceholderType::FloatVector);
     for (int i = 0; i < nq; ++i) {
         std::vector<float> vec;
         for (int d = 0; d < dim; ++d) {
@@ -430,13 +430,13 @@ TEST(CApiTest, MultiDeleteGrowingSegment) {
     ASSERT_EQ(del_res.error_code, Success);
 
     // retrieve pks = {1}
-    std::vector<int64_t> retrive_pks = {1};
+    std::vector<int64_t> retrieve_pks = {1};
     auto schema = ((milvus::segcore::Collection*)collection)->get_schema();
     auto plan = std::make_unique<query::RetrievePlan>(*schema);
     auto term_expr = std::make_unique<query::TermExprImpl<int64_t>>(
         milvus::query::ColumnInfo(
             FieldId(101), DataType::INT64, std::vector<std::string>()),
-        retrive_pks,
+        retrieve_pks,
         proto::plan::GenericValue::kInt64Val);
     plan->plan_node_ = std::make_unique<query::RetrievePlanNode>();
     plan->plan_node_->predicate_ = std::move(term_expr);
@@ -455,11 +455,11 @@ TEST(CApiTest, MultiDeleteGrowingSegment) {
     DeleteRetrieveResult(&retrieve_result);
 
     // retrieve pks = {2}
-    retrive_pks = {2};
+    retrieve_pks = {2};
     term_expr = std::make_unique<query::TermExprImpl<int64_t>>(
         milvus::query::ColumnInfo(
             FieldId(101), DataType::INT64, std::vector<std::string>()),
-        retrive_pks,
+        retrieve_pks,
         proto::plan::GenericValue::kInt64Val);
     plan->plan_node_->predicate_ = std::move(term_expr);
     res = CRetrieve(segment, plan.get(), {}, max_ts, &retrieve_result);
@@ -530,13 +530,13 @@ TEST(CApiTest, MultiDeleteSealedSegment) {
     ASSERT_EQ(del_res.error_code, Success);
 
     // retrieve pks = {1}
-    std::vector<int64_t> retrive_pks = {1};
+    std::vector<int64_t> retrieve_pks = {1};
     auto schema = ((milvus::segcore::Collection*)collection)->get_schema();
     auto plan = std::make_unique<query::RetrievePlan>(*schema);
     auto term_expr = std::make_unique<query::TermExprImpl<int64_t>>(
         milvus::query::ColumnInfo(
             FieldId(101), DataType::INT64, std::vector<std::string>()),
-        retrive_pks,
+        retrieve_pks,
         proto::plan::GenericValue::kInt64Val);
     plan->plan_node_ = std::make_unique<query::RetrievePlanNode>();
     plan->plan_node_->predicate_ = std::move(term_expr);
@@ -555,11 +555,11 @@ TEST(CApiTest, MultiDeleteSealedSegment) {
     DeleteRetrieveResult(&retrieve_result);
 
     // retrieve pks = {2}
-    retrive_pks = {2};
+    retrieve_pks = {2};
     term_expr = std::make_unique<query::TermExprImpl<int64_t>>(
         milvus::query::ColumnInfo(
             FieldId(101), DataType::INT64, std::vector<std::string>()),
-        retrive_pks,
+        retrieve_pks,
         proto::plan::GenericValue::kInt64Val);
     plan->plan_node_->predicate_ = std::move(term_expr);
     res = CRetrieve(segment, plan.get(), {}, max_ts, &retrieve_result);
@@ -635,13 +635,13 @@ TEST(CApiTest, DeleteRepeatedPksFromGrowingSegment) {
     ASSERT_EQ(res.error_code, Success);
 
     // create retrieve plan pks in {1, 2, 3}
-    std::vector<int64_t> retrive_row_ids = {1, 2, 3};
+    std::vector<int64_t> retrieve_row_ids = {1, 2, 3};
     auto schema = ((milvus::segcore::Collection*)collection)->get_schema();
     auto plan = std::make_unique<query::RetrievePlan>(*schema);
     auto term_expr = std::make_unique<query::TermExprImpl<int64_t>>(
         milvus::query::ColumnInfo(
             FieldId(101), DataType::INT64, std::vector<std::string>()),
-        retrive_row_ids,
+        retrieve_row_ids,
         proto::plan::GenericValue::kInt64Val);
     plan->plan_node_ = std::make_unique<query::RetrievePlanNode>();
     plan->plan_node_->predicate_ = std::move(term_expr);
@@ -707,13 +707,13 @@ TEST(CApiTest, DeleteRepeatedPksFromSealedSegment) {
     SealedLoadFieldData(dataset, *sealed_segment);
 
     // create retrieve plan pks in {1, 2, 3}
-    std::vector<int64_t> retrive_row_ids = {1, 2, 3};
+    std::vector<int64_t> retrieve_row_ids = {1, 2, 3};
     auto schema = ((milvus::segcore::Collection*)collection)->get_schema();
     auto plan = std::make_unique<query::RetrievePlan>(*schema);
     auto term_expr = std::make_unique<query::TermExprImpl<int64_t>>(
         milvus::query::ColumnInfo(
             FieldId(101), DataType::INT64, std::vector<std::string>()),
-        retrive_row_ids,
+        retrieve_row_ids,
         proto::plan::GenericValue::kInt64Val);
     plan->plan_node_ = std::make_unique<query::RetrievePlanNode>();
     plan->plan_node_->predicate_ = std::move(term_expr);
@@ -808,13 +808,13 @@ TEST(CApiTest, InsertSamePkAfterDeleteOnGrowingSegment) {
     ASSERT_EQ(del_res.error_code, Success);
 
     // create retrieve plan pks in {1, 2, 3}, timestamp = 9
-    std::vector<int64_t> retrive_row_ids = {1, 2, 3};
+    std::vector<int64_t> retrieve_row_ids = {1, 2, 3};
     auto schema = ((milvus::segcore::Collection*)collection)->get_schema();
     auto plan = std::make_unique<query::RetrievePlan>(*schema);
     auto term_expr = std::make_unique<query::TermExprImpl<int64_t>>(
         milvus::query::ColumnInfo(
             FieldId(101), DataType::INT64, std::vector<std::string>()),
-        retrive_row_ids,
+        retrieve_row_ids,
         proto::plan::GenericValue::kInt64Val);
     plan->plan_node_ = std::make_unique<query::RetrievePlanNode>();
     plan->plan_node_->predicate_ = std::move(term_expr);
@@ -896,13 +896,13 @@ TEST(CApiTest, InsertSamePkAfterDeleteOnSealedSegment) {
     ASSERT_EQ(del_res.error_code, Success);
 
     // create retrieve plan pks in {1, 2, 3}, timestamp = 9
-    std::vector<int64_t> retrive_row_ids = {1, 2, 3};
+    std::vector<int64_t> retrieve_row_ids = {1, 2, 3};
     auto schema = ((milvus::segcore::Collection*)collection)->get_schema();
     auto plan = std::make_unique<query::RetrievePlan>(*schema);
     auto term_expr = std::make_unique<query::TermExprImpl<int64_t>>(
         milvus::query::ColumnInfo(
             FieldId(101), DataType::INT64, std::vector<std::string>()),
-        retrive_row_ids,
+        retrieve_row_ids,
         proto::plan::GenericValue::kInt64Val);
     plan->plan_node_ = std::make_unique<query::RetrievePlanNode>();
     plan->plan_node_->predicate_ = std::move(term_expr);
@@ -1254,7 +1254,7 @@ CheckSearchResultDuplicate(const std::vector<CSearchResult>& results) {
     }
 }
 
-TEST(CApiTest, ReudceNullResult) {
+TEST(CApiTest, ReduceNullResult) {
     auto collection = NewCollection(get_default_schema_config());
     auto segment = NewSegment(collection, Growing, -1);
     auto schema = ((milvus::segcore::Collection*)collection)->get_schema();
@@ -3742,14 +3742,14 @@ TEST(CApiTest, SealedSegment_Update_Field_Size) {
     ASSERT_EQ(segment->get_field_avg_size(str_fid), row_size);
 
     // load data and update avg field size
-    std::vector<std::string> str_datas;
+    std::vector<std::string> str_data;
     int64_t total_size = 0;
     for (int i = 0; i < N; ++i) {
         auto str = "string_data_" + std::to_string(i);
         total_size += str.size();
-        str_datas.emplace_back(str);
+        str_data.emplace_back(str);
     }
-    auto res = LoadFieldRawData(segment, str_fid.get(), str_datas.data(), N);
+    auto res = LoadFieldRawData(segment, str_fid.get(), str_data.data(), N);
     ASSERT_EQ(res.error_code, Success);
     ASSERT_EQ(segment->get_field_avg_size(str_fid),
               (row_size * N + total_size) / (2 * N));
@@ -3787,7 +3787,7 @@ TEST(CApiTest, GrowingSegment_Load_Field_Data) {
     DeleteSegment(segment);
 }
 
-TEST(CApiTest, RetriveScalarFieldFromSealedSegmentWithIndex) {
+TEST(CApiTest, RetrieveScalarFieldFromSealedSegmentWithIndex) {
     auto schema = std::make_shared<Schema>();
     auto i8_fid = schema->AddDebugField("age8", DataType::INT8);
     auto i16_fid = schema->AddDebugField("age16", DataType::INT16);
@@ -3880,11 +3880,11 @@ TEST(CApiTest, RetriveScalarFieldFromSealedSegmentWithIndex) {
     // create retrieve plan
     auto plan = std::make_unique<query::RetrievePlan>(*schema);
     plan->plan_node_ = std::make_unique<query::RetrievePlanNode>();
-    std::vector<int64_t> retrive_row_ids = {age64_col[0]};
+    std::vector<int64_t> retrieve_row_ids = {age64_col[0]};
     auto term_expr = std::make_unique<query::TermExprImpl<int64_t>>(
         milvus::query::ColumnInfo(
             i64_fid, DataType::INT64, std::vector<std::string>()),
-        retrive_row_ids,
+        retrieve_row_ids,
         proto::plan::GenericValue::kInt64Val);
     plan->plan_node_->predicate_ = std::move(term_expr);
     std::vector<FieldId> target_field_ids;
@@ -4188,7 +4188,7 @@ TEST(CApiTest, RANGE_SEARCH_WITH_RADIUS_AND_RANGE_FILTER_WHEN_L2) {
     DeleteSegment(segment);
 }
 
-TEST(CApiTest, AssembeChunkTest) {
+TEST(CApiTest, AssembleChunkTest) {
     FixedVector<bool> chunk;
     for (size_t i = 0; i < 1000; ++i) {
         chunk.push_back(i % 2 == 0);
@@ -4311,7 +4311,7 @@ TEST(CApiTest, SearchIdTest) {
     }
 }
 
-TEST(CApiTest, AssembeChunkPerfTest) {
+TEST(CApiTest, AssembleChunkPerfTest) {
     FixedVector<bool> chunk;
     for (size_t i = 0; i < 100000000; ++i) {
         chunk.push_back(i % 2 == 0);

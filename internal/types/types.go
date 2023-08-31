@@ -67,8 +67,8 @@ type DataNode interface {
 	//
 	// Return UnexpectedError code in status:
 	//     If DataNode isn't in HEALTHY: states not HEALTHY or dynamic checks not HEALTHY
-	//     If DataNode doesn't find the correspounding segmentID in its memeory replica
-	// Return Success code in status and trigers background flush:
+	//     If DataNode doesn't find the correspounding segmentID in its memory replica
+	// Return Success code in status and triggers background flush:
 	//     Log an info log if a segment is under flushing
 	FlushSegments(ctx context.Context, req *datapb.FlushSegmentsRequest) (*commonpb.Status, error)
 
@@ -79,7 +79,7 @@ type DataNode interface {
 
 	// Compaction will add a compaction task according to the request plan
 	Compaction(ctx context.Context, req *datapb.CompactionPlan) (*commonpb.Status, error)
-	// GetCompactionState get states of all compation tasks
+	// GetCompactionState get states of all compaction tasks
 	GetCompactionState(ctx context.Context, req *datapb.CompactionStateRequest) (*datapb.CompactionStateResponse, error)
 	// SyncSegments is called by DataCoord, to sync the segments meta when complete compaction
 	SyncSegments(ctx context.Context, req *datapb.SyncSegmentsRequest) (*commonpb.Status, error)
@@ -256,7 +256,7 @@ type DataCoord interface {
 	//  and related message stream positions
 	//
 	// ctx is the context to control request deadline and cancellation
-	// req contains the segment binlogs and checkpoint informations.
+	// req contains the segment binlogs and checkpoint information.
 	//
 	// response status contains the status/error code and failing reason if any
 	// error is returned only when some communication issue occurs
@@ -1096,7 +1096,7 @@ type ProxyComponent interface {
 	// error is always nil
 	ReleasePartitions(ctx context.Context, request *milvuspb.ReleasePartitionsRequest) (*commonpb.Status, error)
 
-	// GetPartitionStatistics notifies Proxy to return a partiiton's statistics
+	// GetPartitionStatistics notifies Proxy to return a partition's statistics
 	//
 	// ctx is the context to control request deadline and cancellation
 	// req contains the request params, including database name(reserved), collection name, partition name
@@ -1339,7 +1339,7 @@ type ProxyComponent interface {
 	// error is always nil
 	DropAlias(ctx context.Context, request *milvuspb.DropAliasRequest) (*commonpb.Status, error)
 
-	// AlterAlias notifies Proxy to alter an alias from a colection to another
+	// AlterAlias notifies Proxy to alter an alias from a collection to another
 	//
 	// ctx is the context to control request deadline and cancellation
 	// req contains the request params, including database name(reserved), collection name, alias

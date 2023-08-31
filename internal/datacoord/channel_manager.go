@@ -196,7 +196,7 @@ func (c *ChannelManager) Close() {
 // ToWatch         get startTs and timeoutTs, start timer
 // WatchSuccess    ignore
 // WatchFail       ToRelease
-// ToRelase        get startTs and timeoutTs, start timer
+// ToRelease        get startTs and timeoutTs, start timer
 // ReleaseSuccess  remove
 // ReleaseFail     clean up and remove
 func (c *ChannelManager) checkOldNodes(nodes []UniqueID) error {
@@ -220,7 +220,7 @@ func (c *ChannelManager) checkOldNodes(nodes []UniqueID) error {
 				zap.String("channelName", channelName))
 
 			switch info.GetState() {
-			case datapb.ChannelWatchState_ToWatch, datapb.ChannelWatchState_Uncomplete:
+			case datapb.ChannelWatchState_ToWatch, datapb.ChannelWatchState_Incomplete:
 				c.stateTimer.startOne(datapb.ChannelWatchState_ToWatch, channelName, nodeID, checkInterval)
 
 			case datapb.ChannelWatchState_WatchFailure:
@@ -458,7 +458,7 @@ func (c *ChannelManager) fillChannelWatchInfo(op *ChannelOp) {
 		info := &datapb.ChannelWatchInfo{
 			Vchan:   vcInfo,
 			StartTs: time.Now().Unix(),
-			State:   datapb.ChannelWatchState_Uncomplete,
+			State:   datapb.ChannelWatchState_Incomplete,
 			Schema:  ch.Schema,
 		}
 		op.ChannelWatchInfos = append(op.ChannelWatchInfos, info)
@@ -691,7 +691,7 @@ func (c *ChannelManager) watchChannelStatesLoop(ctx context.Context, revision in
 		case event, ok := <-etcdWatcher:
 			if !ok {
 				log.Warn("datacoord failed to watch channel, return")
-				// rewatch for transient network error, session handles process quiting if connect is not recoverable
+				// rewatch for transient network error, session handles process quitting if connect is not recoverable
 				go c.watchChannelStatesLoop(ctx, revision)
 				return
 			}
@@ -699,7 +699,7 @@ func (c *ChannelManager) watchChannelStatesLoop(ctx context.Context, revision in
 			if err := event.Err(); err != nil {
 				log.Warn("datacoord watch channel hit error", zap.Error(event.Err()))
 				// https://github.com/etcd-io/etcd/issues/8980
-				// TODO add list and wathc with revision
+				// TODO add list and watch with revision
 				if event.Err() == v3rpc.ErrCompacted {
 					go c.watchChannelStatesLoop(ctx, event.CompactRevision)
 					return
@@ -725,7 +725,7 @@ func (c *ChannelManager) watchChannelStatesLoop(ctx context.Context, revision in
 				state := watchInfo.GetState()
 				if state == datapb.ChannelWatchState_ToWatch ||
 					state == datapb.ChannelWatchState_ToRelease ||
-					state == datapb.ChannelWatchState_Uncomplete {
+					state == datapb.ChannelWatchState_Incomplete {
 					c.stateTimer.resetIfExist(watchInfo.GetVchan().ChannelName, Params.DataCoordCfg.WatchTimeoutInterval.GetAsDuration(time.Second))
 					log.Info("tickle update, timer delay", zap.String("channel", watchInfo.GetVchan().ChannelName), zap.Int32("progress", watchInfo.Progress))
 					continue

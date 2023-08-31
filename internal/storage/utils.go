@@ -60,14 +60,14 @@ func checkRowIDField(data *InsertData) bool {
 	return ok
 }
 
-func checkNumRows(fieldDatas ...FieldData) bool {
-	if len(fieldDatas) <= 0 {
+func checkNumRows(fieldData ...FieldData) bool {
+	if len(fieldData) <= 0 {
 		return true
 	}
 
-	numRows := fieldDatas[0].RowNum()
-	for i := 1; i < len(fieldDatas); i++ {
-		if numRows != fieldDatas[i].RowNum() {
+	numRows := fieldData[0].RowNum()
+	for i := 1; i < len(fieldData); i++ {
+		if numRows != fieldData[i].RowNum() {
 			return false
 		}
 	}
@@ -77,7 +77,7 @@ func checkNumRows(fieldDatas ...FieldData) bool {
 
 type fieldDataList struct {
 	IDs   []FieldID
-	datas []FieldData
+	data []FieldData
 }
 
 func (ls fieldDataList) Len() int {
@@ -90,7 +90,7 @@ func (ls fieldDataList) Less(i, j int) bool {
 
 func (ls fieldDataList) Swap(i, j int) {
 	ls.IDs[i], ls.IDs[j] = ls.IDs[j], ls.IDs[i]
-	ls.datas[i], ls.datas[j] = ls.datas[j], ls.datas[i]
+	ls.data[i], ls.data[j] = ls.data[j], ls.data[i]
 }
 
 func sortFieldDataList(ls fieldDataList) {
@@ -129,12 +129,12 @@ func TransferColumnBasedInsertDataToRowBased(data *InsertData) (
 		}
 
 		ls.IDs = append(ls.IDs, fieldID)
-		ls.datas = append(ls.datas, data.Data[fieldID])
+		ls.data = append(ls.data, data.Data[fieldID])
 	}
 
-	// checkNumRows(tss, rowIds, ls.datas...) // don't work
+	// checkNumRows(tss, rowIds, ls.data...) // don't work
 	all := []FieldData{tss, rowIds}
-	all = append(all, ls.datas...)
+	all = append(all, ls.data...)
 	if !checkNumRows(all...) {
 		return nil, nil, nil,
 			errors.New("columns of insert data have different length")
@@ -149,7 +149,7 @@ func TransferColumnBasedInsertDataToRowBased(data *InsertData) (
 		var buffer bytes.Buffer
 
 		for j := 0; j < ls.Len(); j++ {
-			d := ls.datas[j].GetRow(i)
+			d := ls.data[j].GetRow(i)
 			err := binary.Write(&buffer, common.Endian, d)
 			if err != nil {
 				return nil, nil, nil,
@@ -731,13 +731,13 @@ func MergeFieldData(data *InsertData, fid FieldID, field FieldData) {
 	}
 }
 
-// MergeInsertData merge insert datas. Maybe there are large write zoom if frequent inserts are met.
-func MergeInsertData(datas ...*InsertData) *InsertData {
+// MergeInsertData merge insert data. Maybe there are large write zoom if frequent inserts are met.
+func MergeInsertData(data ...*InsertData) *InsertData {
 	ret := &InsertData{
 		Data:  make(map[FieldID]FieldData),
 		Infos: nil,
 	}
-	for _, data := range datas {
+	for _, data := range data {
 		if data != nil {
 			for fid, field := range data.Data {
 				MergeFieldData(ret, fid, field)

@@ -32,9 +32,9 @@
 namespace milvus {
 
 inline size_t
-GetDataSize(const std::vector<storage::FieldDataPtr>& datas) {
+GetDataSize(const std::vector<storage::FieldDataPtr>& data) {
     size_t total_size{0};
-    for (auto data : datas) {
+    for (auto data : data) {
         total_size += data->Size();
     }
 

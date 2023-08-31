@@ -32,7 +32,7 @@ go test -run "$testCaseName^" -testify.m "$subTestifyCaseName^" -race -v
 
 ### Using `suite`
 
-MiniCluster` and `MiniClusterSuite` provides lots of comment preset tool function to execute intergration test.
+MiniCluster` and `MiniClusterSuite` provides lots of comment preset tool function to execute integration test.
 
 It is recommend to add a new test with `testify/suite`
 

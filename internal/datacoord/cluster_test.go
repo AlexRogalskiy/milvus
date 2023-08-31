@@ -361,7 +361,7 @@ func (suite *ClusterSuite) TestUnregister() {
 		suite.MetricsEqual(metrics.DataCoordNumDataNodes, 1)
 	})
 
-	suite.Run("remove_all_channels_after_unregsiter", func() {
+	suite.Run("remove_all_channels_after_unregister", func() {
 		defer kv.RemoveWithPrefix("")
 
 		ctx, cancel := context.WithCancel(context.TODO())
@@ -408,7 +408,7 @@ func TestWatchIfNeeded(t *testing.T) {
 		kv.Close()
 	}()
 
-	t.Run("add deplicated channel to cluster", func(t *testing.T) {
+	t.Run("add deprecated channel to cluster", func(t *testing.T) {
 		defer kv.RemoveWithPrefix("")
 
 		ctx, cancel := context.WithCancel(context.TODO())

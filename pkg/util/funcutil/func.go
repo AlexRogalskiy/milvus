@@ -116,10 +116,10 @@ func GetVecFieldIDs(schema *schemapb.CollectionSchema) []int64 {
 	return vecFieldIDs
 }
 
-func Map2KeyValuePair(datas map[string]string) []*commonpb.KeyValuePair {
-	results := make([]*commonpb.KeyValuePair, len(datas))
+func Map2KeyValuePair(data map[string]string) []*commonpb.KeyValuePair {
+	results := make([]*commonpb.KeyValuePair, len(data))
 	offset := 0
-	for key, value := range datas {
+	for key, value := range data {
 		results[offset] = &commonpb.KeyValuePair{
 			Key:   key,
 			Value: value,
@@ -129,19 +129,19 @@ func Map2KeyValuePair(datas map[string]string) []*commonpb.KeyValuePair {
 	return results
 }
 
-func KeyValuePair2Map(datas []*commonpb.KeyValuePair) map[string]string {
+func KeyValuePair2Map(data []*commonpb.KeyValuePair) map[string]string {
 	results := make(map[string]string)
-	for _, pair := range datas {
+	for _, pair := range data {
 		results[pair.Key] = pair.Value
 	}
 
 	return results
 }
 
-func ConvertToKeyValuePairPointer(datas []commonpb.KeyValuePair) []*commonpb.KeyValuePair {
+func ConvertToKeyValuePairPointer(data []commonpb.KeyValuePair) []*commonpb.KeyValuePair {
 	var kvs []*commonpb.KeyValuePair
-	for i := 0; i < len(datas); i++ {
-		kvs = append(kvs, &datas[i])
+	for i := 0; i < len(data); i++ {
+		kvs = append(kvs, &data[i])
 	}
 	return kvs
 }
@@ -192,30 +192,30 @@ func ConvertChannelName(chanName string, tokenFrom string, tokenTo string) (stri
 	return strings.Replace(chanName, tokenFrom, tokenTo, 1), nil
 }
 
-func getNumRowsOfScalarField(datas interface{}) uint64 {
-	realTypeDatas := reflect.ValueOf(datas)
-	return uint64(realTypeDatas.Len())
+func getNumRowsOfScalarField(data interface{}) uint64 {
+	realTypeData := reflect.ValueOf(data)
+	return uint64(realTypeData.Len())
 }
 
-func GetNumRowsOfFloatVectorField(fDatas []float32, dim int64) (uint64, error) {
+func GetNumRowsOfFloatVectorField(fData []float32, dim int64) (uint64, error) {
 	if dim <= 0 {
 		return 0, fmt.Errorf("dim(%d) should be greater than 0", dim)
 	}
-	l := len(fDatas)
+	l := len(fData)
 	if int64(l)%dim != 0 {
 		return 0, fmt.Errorf("the length(%d) of float data should divide the dim(%d)", l, dim)
 	}
 	return uint64(int64(l) / dim), nil
 }
 
-func GetNumRowsOfBinaryVectorField(bDatas []byte, dim int64) (uint64, error) {
+func GetNumRowsOfBinaryVectorField(bData []byte, dim int64) (uint64, error) {
 	if dim <= 0 {
 		return 0, fmt.Errorf("dim(%d) should be greater than 0", dim)
 	}
 	if dim%8 != 0 {
 		return 0, fmt.Errorf("dim(%d) should divide 8", dim)
 	}
-	l := len(bDatas)
+	l := len(bData)
 	if (8*int64(l))%dim != 0 {
 		return 0, fmt.Errorf("the num(%d) of all bits should divide the dim(%d)", 8*l, dim)
 	}

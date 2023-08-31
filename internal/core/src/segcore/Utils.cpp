@@ -47,10 +47,10 @@ ParsePksFromFieldData(std::vector<PkType>& pks, const DataArray& data) {
 void
 ParsePksFromFieldData(DataType data_type,
                       std::vector<PkType>& pks,
-                      const std::vector<storage::FieldDataPtr>& datas) {
+                      const std::vector<storage::FieldDataPtr>& data) {
     int64_t offset = 0;
 
-    for (auto& field_data : datas) {
+    for (auto& field_data : data) {
         AssertInfo(data_type == field_data->get_data_type(),
                    "inconsistent data type when parse pk from field data");
         int64_t row_count = field_data->get_num_rows();
@@ -585,7 +585,7 @@ ReverseDataFromIndex(const index::IndexBase* index,
 // init segcore storage config first, and create default remote chunk manager
 // segcore use default remote chunk manager to load data from minio/s3
 void
-LoadFieldDatasFromRemote(std::vector<std::string>& remote_files,
+LoadFieldDataFromRemote(std::vector<std::string>& remote_files,
                          storage::FieldDataChannelPtr channel) {
     auto parallel_degree =
         static_cast<uint64_t>(DEFAULT_FIELD_MAX_MEMORY_LIMIT / FILE_SLICE_SIZE);

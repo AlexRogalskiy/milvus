@@ -57,11 +57,11 @@ TEST(GrowingIndex, Correctness) {
     auto plan_str = plan_node.SerializeAsString();
 
     milvus::proto::plan::PlanNode range_query_plan_node;
-    auto vector_range_querys = range_query_plan_node.mutable_vector_anns();
-    vector_range_querys->set_is_binary(false);
-    vector_range_querys->set_placeholder_tag("$0");
-    vector_range_querys->set_field_id(102);
-    auto range_query_info = vector_range_querys->mutable_query_info();
+    auto vector_range_queries = range_query_plan_node.mutable_vector_anns();
+    vector_range_queries->set_is_binary(false);
+    vector_range_queries->set_placeholder_tag("$0");
+    vector_range_queries->set_field_id(102);
+    auto range_query_info = vector_range_queries->mutable_query_info();
     range_query_info->set_topk(5);
     range_query_info->set_round_decimal(3);
     range_query_info->set_metric_type("l2");

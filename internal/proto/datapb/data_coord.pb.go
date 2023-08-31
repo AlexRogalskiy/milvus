@@ -64,7 +64,7 @@ func (SegmentType) EnumDescriptor() ([]byte, []int) {
 type ChannelWatchState int32
 
 const (
-	ChannelWatchState_Uncomplete     ChannelWatchState = 0
+	ChannelWatchState_Incomplete     ChannelWatchState = 0
 	ChannelWatchState_Complete       ChannelWatchState = 1
 	ChannelWatchState_ToWatch        ChannelWatchState = 2
 	ChannelWatchState_WatchSuccess   ChannelWatchState = 3
@@ -75,7 +75,7 @@ const (
 )
 
 var ChannelWatchState_name = map[int32]string{
-	0: "Uncomplete",
+	0: "Incomplete",
 	1: "Complete",
 	2: "ToWatch",
 	3: "WatchSuccess",
@@ -86,7 +86,7 @@ var ChannelWatchState_name = map[int32]string{
 }
 
 var ChannelWatchState_value = map[string]int32{
-	"Uncomplete":     0,
+	"Incomplete":     0,
 	"Complete":       1,
 	"ToWatch":        2,
 	"WatchSuccess":   3,
@@ -2014,7 +2014,7 @@ func (m *ChannelStatus) GetState() ChannelWatchState {
 	if m != nil {
 		return m.State
 	}
-	return ChannelWatchState_Uncomplete
+	return ChannelWatchState_Incomplete
 }
 
 func (m *ChannelStatus) GetCollectionID() int64 {
@@ -2831,7 +2831,7 @@ func (m *ChannelWatchInfo) GetState() ChannelWatchState {
 	if m != nil {
 		return m.State
 	}
-	return ChannelWatchState_Uncomplete
+	return ChannelWatchState_Incomplete
 }
 
 func (m *ChannelWatchInfo) GetTimeoutTs() int64 {
@@ -3271,7 +3271,7 @@ func (m *CompactionStateResult) GetState() commonpb.CompactionState {
 	if m != nil {
 		return m.State
 	}
-	return commonpb.CompactionState_UndefiedState
+	return commonpb.CompactionState_UndefinedState
 }
 
 func (m *CompactionStateResult) GetResult() *CompactionResult {

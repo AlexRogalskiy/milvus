@@ -321,7 +321,7 @@ message DeltaLogInfo {
 }
 
 enum ChannelWatchState {
-  Uncomplete = 0; // deprecated, keep it for compatibility
+  Incomplete = 0; // deprecated, keep it for compatibility
   Complete = 1; // deprecated, keep it for compatibility
   ToWatch = 2;
   WatchSuccess = 3;
