@@ -156,7 +156,7 @@ func checkDefaultValue(schema *schemapb.CollectionSchema) error {
 					return merr.WrapErrParameterInvalid("valid length string", "string length exceeds max length", msg)
 				}
 			default:
-				panic("default value unsupport data type")
+				panic("default value unsupported data type")
 			}
 		}
 	}

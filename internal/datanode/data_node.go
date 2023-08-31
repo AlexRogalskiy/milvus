@@ -425,7 +425,7 @@ func (node *DataNode) handlePutEvent(watchInfo *datapb.ChannelWatchInfo, version
 	tickler := newTickler(version, key, watchInfo, node.watchKv, Params.DataNodeCfg.WatchEventTicklerInterval.GetAsDuration(time.Second))
 
 	switch watchInfo.State {
-	case datapb.ChannelWatchState_Uncomplete, datapb.ChannelWatchState_ToWatch:
+	case datapb.ChannelWatchState_Incomplete, datapb.ChannelWatchState_ToWatch:
 		if err := node.flowgraphManager.addAndStart(node, watchInfo.GetVchan(), watchInfo.GetSchema(), tickler); err != nil {
 			log.Warn("handle put event: new data sync service failed", zap.String("vChanName", vChanName), zap.Error(err))
 			watchInfo.State = datapb.ChannelWatchState_WatchFailure

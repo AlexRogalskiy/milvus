@@ -9,7 +9,7 @@ def assemble(template, **kwargs):
     mapping = dict()
     rep_map = dict()
 
-    # drop repetive field from mapping
+    # drop repetitive field from mapping
     for k, v in kwargs.items():
         if isinstance(v, list):
             rep_map[k] = v

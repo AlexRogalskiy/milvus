@@ -431,7 +431,7 @@ func TestRocksmq_Compatibility(t *testing.T) {
 	assert.Equal(t, cMsgs[0].Properties, expect)
 
 	// between 2.2.0 and 2.3.0, the key of Payload is topic/properties/msgid/Payload
-	// will ingnore the property before 2.3.0, just make sure property empty is ok for 2.3
+	// will ignore the property before 2.3.0, just make sure property empty is ok for 2.3
 	// after 2.3, the properties will be stored in column families
 	// it aims to test if produce in 2.2.0, but consume in 2.3.0, will get properties successfully
 	msg1 := "1_message"
@@ -449,7 +449,7 @@ func TestRocksmq_Compatibility(t *testing.T) {
 	assert.Equal(t, string(msg2[0].Payload), "1_message")
 	_, ok = msg2[0].Properties[common.TraceIDKey]
 	assert.False(t, ok)
-	// will ingnore the property before 2.3.0, just make sure property empty is ok for 2.3
+	// will ignore the property before 2.3.0, just make sure property empty is ok for 2.3
 	expect = make(map[string]string)
 	assert.Equal(t, cMsgs[0].Properties, expect)
 

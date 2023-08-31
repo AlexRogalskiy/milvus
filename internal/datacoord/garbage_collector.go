@@ -300,7 +300,7 @@ func (gc *garbageCollector) clearEtcd() {
 			if err != nil {
 				log.Info("GC segment meta failed to drop segment", zap.Int64("segment id", segment.GetID()), zap.Error(err))
 			} else {
-				log.Info("GC segment meta drop semgent", zap.Int64("segment id", segment.GetID()))
+				log.Info("GC segment meta drop segment", zap.Int64("segment id", segment.GetID()))
 			}
 		}
 		if segList := gc.meta.GetSegmentsByChannel(segInsertChannel); len(segList) == 0 &&

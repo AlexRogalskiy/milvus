@@ -226,7 +226,7 @@ func (m *Binary) GetValue() []byte {
 }
 
 type BinarySet struct {
-	Datas                []*Binary `protobuf:"bytes,1,rep,name=datas,proto3" json:"datas,omitempty"`
+	Data                []*Binary `protobuf:"bytes,1,rep,name=data,proto3" json:"data,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}  `json:"-"`
 	XXX_unrecognized     []byte    `json:"-"`
 	XXX_sizecache        int32     `json:"-"`
@@ -257,9 +257,9 @@ func (m *BinarySet) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_BinarySet proto.InternalMessageInfo
 
-func (m *BinarySet) GetDatas() []*Binary {
+func (m *BinarySet) GetData() []*Binary {
 	if m != nil {
-		return m.Datas
+		return m.Data
 	}
 	return nil
 }

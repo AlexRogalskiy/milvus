@@ -65,13 +65,13 @@ func NewInsertBinlogIterator(blobs []*Blob, PKfieldID UniqueID, pkType schemapb.
 	// TODO: load part of file to read records other than loading all content
 	reader := NewInsertCodecWithSchema(nil)
 
-	_, _, serData, err := reader.Deserialize(blobs)
+	_, _, setData, err := reader.Deserialize(blobs)
 
 	if err != nil {
 		return nil, err
 	}
 
-	return &InsertBinlogIterator{data: serData, PKfieldID: PKfieldID, PkType: pkType}, nil
+	return &InsertBinlogIterator{data: setData, PKfieldID: PKfieldID, PkType: pkType}, nil
 }
 
 // HasNext returns true if the iterator have unread record
@@ -135,13 +135,13 @@ type DeltalogIterator struct {
 
 func NewDeltalogIterator(blob *Blob) (*DeltalogIterator, error) {
 	deltaCodec := NewDeleteCodec()
-	_, _, serData, err := deltaCodec.Deserialize(blob)
+	_, _, setData, err := deltaCodec.Deserialize(blob)
 	if err != nil {
 		return nil, err
 	}
 
-	values := make([]*Value, 0, len(serData.Data))
-	for pkstr, ts := range serData.Data {
+	values := make([]*Value, 0, len(setData.Data))
+	for pkstr, ts := range setData.Data {
 		pk, err := strconv.ParseInt(pkstr, 10, 64)
 		if err != nil {
 			return nil, err

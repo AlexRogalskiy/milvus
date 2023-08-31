@@ -197,9 +197,9 @@ ParseConfigFromIndexParams(
 }
 
 void
-AssembleIndexDatas(std::map<std::string, storage::FieldDataPtr>& index_datas) {
-    if (index_datas.find(INDEX_FILE_SLICE_META) != index_datas.end()) {
-        auto slice_meta = index_datas.at(INDEX_FILE_SLICE_META);
+AssembleIndexData(std::map<std::string, storage::FieldDataPtr>& index_data) {
+    if (index_data.find(INDEX_FILE_SLICE_META) != index_data.end()) {
+        auto slice_meta = index_data.at(INDEX_FILE_SLICE_META);
         Config meta_data = Config::parse(std::string(
             static_cast<const char*>(slice_meta->Data()), slice_meta->Size()));
 
@@ -213,32 +213,32 @@ AssembleIndexDatas(std::map<std::string, storage::FieldDataPtr>& index_datas) {
 
             for (auto i = 0; i < slice_num; ++i) {
                 std::string file_name = GenSlicedFileName(prefix, i);
-                AssertInfo(index_datas.find(file_name) != index_datas.end(),
+                AssertInfo(index_data.find(file_name) != index_data.end(),
                            "lost index slice data");
-                auto data = index_datas.at(file_name);
+                auto data = index_data.at(file_name);
                 auto len = data->Size();
                 new_field_data->FillFieldData(data->Data(), len);
-                index_datas.erase(file_name);
+                index_data.erase(file_name);
             }
             AssertInfo(
                 new_field_data->IsFull(),
                 "index len is inconsistent after disassemble and assemble");
-            index_datas[prefix] = new_field_data;
+            index_data[prefix] = new_field_data;
         }
     }
 }
 
 void
-AssembleIndexDatas(
-    std::map<std::string, storage::FieldDataChannelPtr>& index_datas,
+AssembleIndexData(
+    std::map<std::string, storage::FieldDataChannelPtr>& index_data,
     std::unordered_map<std::string, storage::FieldDataPtr>& result) {
-    if (auto meta_iter = index_datas.find(INDEX_FILE_SLICE_META);
-        meta_iter != index_datas.end()) {
+    if (auto meta_iter = index_data.find(INDEX_FILE_SLICE_META);
+        meta_iter != index_data.end()) {
         auto raw_metadata_array =
             storage::CollectFieldDataChannel(meta_iter->second);
         auto raw_metadata = storage::MergeFieldData(raw_metadata_array);
         result[INDEX_FILE_SLICE_META] = raw_metadata;
-        index_datas.erase(INDEX_FILE_SLICE_META);
+        index_data.erase(INDEX_FILE_SLICE_META);
         Config metadata = Config::parse(
             std::string(static_cast<const char*>(raw_metadata->Data()),
                         raw_metadata->Size()));
@@ -253,14 +253,14 @@ AssembleIndexDatas(
 
             for (auto i = 0; i < slice_num; ++i) {
                 std::string file_name = GenSlicedFileName(prefix, i);
-                auto it = index_datas.find(file_name);
-                AssertInfo(it != index_datas.end(), "lost index slice data");
+                auto it = index_data.find(file_name);
+                AssertInfo(it != index_data.end(), "lost index slice data");
                 auto& channel = it->second;
                 auto data_array = storage::CollectFieldDataChannel(channel);
                 auto data = storage::MergeFieldData(data_array);
                 auto len = data->Size();
                 new_field_data->FillFieldData(data->Data(), len);
-                index_datas.erase(file_name);
+                index_data.erase(file_name);
             }
             AssertInfo(
                 new_field_data->IsFull(),
@@ -268,7 +268,7 @@ AssembleIndexDatas(
             result[prefix] = new_field_data;
         }
     }
-    for (auto& [key, channel] : index_datas) {
+    for (auto& [key, channel] : index_data) {
         if (key == INDEX_FILE_SLICE_META) {
             continue;
         }

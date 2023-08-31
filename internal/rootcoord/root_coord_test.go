@@ -905,8 +905,8 @@ func TestRootCoord_ShowConfigurations(t *testing.T) {
 		resp, err := c.ShowConfigurations(ctx, req)
 		assert.NoError(t, err)
 		assert.Equal(t, commonpb.ErrorCode_Success, resp.GetStatus().GetErrorCode())
-		assert.Equal(t, 1, len(resp.GetConfiguations()))
-		assert.Equal(t, "rootcoord.port", resp.GetConfiguations()[0].Key)
+		assert.Equal(t, 1, len(resp.GetConfigurations()))
+		assert.Equal(t, "rootcoord.port", resp.GetConfigurations()[0].Key)
 	})
 }
 
@@ -1095,7 +1095,7 @@ func TestCore_Import(t *testing.T) {
 	})
 
 	// Remove the following case after bulkinsert can support partition key
-	t.Run("unsupport partition key", func(t *testing.T) {
+	t.Run("unsupported partition key", func(t *testing.T) {
 		ctx := context.Background()
 		c := newTestCore(withHealthyCode(),
 			withMeta(meta))
@@ -1115,7 +1115,7 @@ func TestCore_Import(t *testing.T) {
 		assert.NotNil(t, resp)
 	})
 
-	t.Run("not allow partiton name with partition key", func(t *testing.T) {
+	t.Run("not allow partition name with partition key", func(t *testing.T) {
 		ctx := context.Background()
 		c := newTestCore(withHealthyCode(),
 			withMeta(meta))

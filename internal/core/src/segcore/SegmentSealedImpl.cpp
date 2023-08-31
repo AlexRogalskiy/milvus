@@ -191,8 +191,8 @@ SegmentSealedImpl::LoadFieldData(const LoadFieldDataInfo& load_info) {
         auto& pool =
             ThreadPools::GetThreadPool(milvus::ThreadPoolPriority::MIDDLE);
         auto load_future = pool.Submit(
-            LoadFieldDatasFromRemote, insert_files, field_data_info.channel);
-        LOG_SEGCORE_INFO_ << "finish submitting LoadFieldDatasFromRemote task "
+            LoadFieldDataFromRemote, insert_files, field_data_info.channel);
+        LOG_SEGCORE_INFO_ << "finish submitting LoadFieldDataFromRemote task "
                              "to thread pool, "
                           << "segmentID:" << this->id_
                           << ", fieldID:" << info.field_id;

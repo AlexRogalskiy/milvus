@@ -28,7 +28,7 @@ Search is executable as long as all the columns involved in the search are loade
 5. `primary_key_index_`: store index for pk column
    1. Use brand new ScalarIndexBase format
    2. **Note: The functions here may overlap with scalar indexes. It is recommended to replace scalar index with ScalarIndexBase**
-6. `field_datas_`: store original data
+6. `field_data_`: store original data
    1. `aligned_vector<char>` format guarantees `int/float` data are aligned
 7. `SealedIndexingRecord vecindexs_`: store vector index
 8. `row_ids_/timestamps_`: RowId/Timestamp data

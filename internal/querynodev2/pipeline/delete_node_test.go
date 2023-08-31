@@ -29,7 +29,7 @@ import (
 
 type DeleteNodeSuite struct {
 	suite.Suite
-	//datas
+	//data
 	collectionID   int64
 	collectionName string
 	partitionIDs   []int64

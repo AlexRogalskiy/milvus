@@ -102,7 +102,7 @@ func (e *channelEventManager) Close() {
 func isEndWatchState(state datapb.ChannelWatchState) bool {
 	return state != datapb.ChannelWatchState_ToWatch && // start watch
 		state != datapb.ChannelWatchState_ToRelease && // start release
-		state != datapb.ChannelWatchState_Uncomplete // legacy state, equal to ToWatch
+		state != datapb.ChannelWatchState_Incomplete // legacy state, equal to ToWatch
 }
 
 type tickler struct {

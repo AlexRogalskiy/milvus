@@ -35,7 +35,7 @@ ParsePksFromFieldData(std::vector<PkType>& pks, const DataArray& data);
 void
 ParsePksFromFieldData(DataType data_type,
                       std::vector<PkType>& pks,
-                      const std::vector<storage::FieldDataPtr>& datas);
+                      const std::vector<storage::FieldDataPtr>& data);
 
 void
 ParsePksFromIDs(std::vector<PkType>& pks,
@@ -156,7 +156,7 @@ ReverseDataFromIndex(const index::IndexBase* index,
                      const FieldMeta& field_meta);
 
 void
-LoadFieldDatasFromRemote(std::vector<std::string>& remote_files,
+LoadFieldDataFromRemote(std::vector<std::string>& remote_files,
                          storage::FieldDataChannelPtr channel);
 
 /**

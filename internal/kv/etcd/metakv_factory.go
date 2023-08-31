@@ -45,7 +45,7 @@ func NewWatchKVFactory(rootPath string, etcdCfg *paramtable.EtcdConfig) (kv.Watc
 			cfg = embed.NewConfig()
 		}
 		cfg.Dir = etcdCfg.DataDir.GetValue()
-		watchKv, err := NewEmbededEtcdKV(cfg, rootPath)
+		watchKv, err := NewEmbeddedEtcdKV(cfg, rootPath)
 		if err != nil {
 			return nil, err
 		}

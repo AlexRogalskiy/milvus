@@ -123,7 +123,7 @@ VectorMemIndex::Load(const Config& config) {
 
     auto parallel_degree =
         static_cast<uint64_t>(DEFAULT_FIELD_MAX_MEMORY_LIMIT / FILE_SLICE_SIZE);
-    std::map<std::string, storage::FieldDataPtr> index_datas{};
+    std::map<std::string, storage::FieldDataPtr> index_data{};
 
     // try to read slice meta first
     std::string slice_meta_filepath;
@@ -188,7 +188,7 @@ VectorMemIndex::Load(const Config& config) {
             AssertInfo(
                 new_field_data->IsFull(),
                 "index len is inconsistent after disassemble and assemble");
-            index_datas[prefix] = new_field_data;
+            index_data[prefix] = new_field_data;
         }
     }
 
@@ -196,13 +196,13 @@ VectorMemIndex::Load(const Config& config) {
         auto result = file_manager_->LoadIndexToMemory(std::vector<std::string>(
             pending_index_files.begin(), pending_index_files.end()));
         for (auto&& index_data : result) {
-            index_datas.insert(std::move(index_data));
+            index_data.insert(std::move(index_data));
         }
     }
 
     LOG_SEGCORE_INFO_ << "construct binary set...";
     BinarySet binary_set;
-    for (auto& [key, data] : index_datas) {
+    for (auto& [key, data] : index_data) {
         LOG_SEGCORE_INFO_ << "add index data to binary set: " << key;
         auto size = data->Size();
         auto deleter = [&](uint8_t*) {};  // avoid repeated deconstruction
@@ -239,28 +239,28 @@ VectorMemIndex::Build(const Config& config) {
         GetValueFromConfig<std::vector<std::string>>(config, "insert_files");
     AssertInfo(insert_files.has_value(),
                "insert file paths is empty when build disk ann index");
-    auto field_datas =
+    auto field_data =
         file_manager_->CacheRawDataToMemory(insert_files.value());
 
     int64_t total_size = 0;
     int64_t total_num_rows = 0;
     int64_t dim = 0;
-    for (auto data : field_datas) {
+    for (auto data : field_data) {
         total_size += data->Size();
         total_num_rows += data->get_num_rows();
         AssertInfo(dim == 0 || dim == data->get_dim(),
-                   "inconsistent dim value between field datas!");
+                   "inconsistent dim value between field data!");
         dim = data->get_dim();
     }
 
     auto buf = std::shared_ptr<uint8_t[]>(new uint8_t[total_size]);
     int64_t offset = 0;
-    for (auto data : field_datas) {
+    for (auto data : field_data) {
         std::memcpy(buf.get() + offset, data->Data(), data->Size());
         offset += data->Size();
         data.reset();
     }
-    field_datas.clear();
+    field_data.clear();
 
     Config build_config;
     build_config.update(config);

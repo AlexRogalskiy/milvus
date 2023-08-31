@@ -1963,7 +1963,7 @@ type dataCoordConfig struct {
 
 	CompactionRPCTimeout              ParamItem `refreshable:"true"`
 	CompactionMaxParallelTasks        ParamItem `refreshable:"true"`
-	CompactionWorkerParalleTasks      ParamItem `refreshable:"true"`
+	CompactionWorkerParallelTasks      ParamItem `refreshable:"true"`
 	MinSegmentToMerge                 ParamItem `refreshable:"true"`
 	MaxSegmentToMerge                 ParamItem `refreshable:"true"`
 	SegmentSmallProportion            ParamItem `refreshable:"true"`
@@ -2034,7 +2034,7 @@ func (p *dataCoordConfig) init(base *BaseTable) {
 		Key:          "dataCoord.segment.diskSegmentMaxSize",
 		Version:      "2.0.0",
 		DefaultValue: "512",
-		Doc:          "Maximun size of a segment in MB for collection which has Disk index",
+		Doc:          "Maximum size of a segment in MB for collection which has Disk index",
 		Export:       true,
 	}
 	p.DiskSegmentMaxSize.Init(base.mgr)
@@ -2145,13 +2145,13 @@ the number of binlog file reaches to max value.`,
 	}
 	p.CompactionMaxParallelTasks.Init(base.mgr)
 
-	p.CompactionWorkerParalleTasks = ParamItem{
+	p.CompactionWorkerParallelTasks = ParamItem{
 		Key:          "dataCoord.compaction.workerMaxParallelTaskNum",
 		Version:      "2.3.0",
 		DefaultValue: "2",
 		Export:       true,
 	}
-	p.CompactionWorkerParalleTasks.Init(base.mgr)
+	p.CompactionWorkerParallelTasks.Init(base.mgr)
 
 	p.MinSegmentToMerge = ParamItem{
 		Key:          "dataCoord.compaction.min.segment",

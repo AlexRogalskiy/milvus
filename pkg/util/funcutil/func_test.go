@@ -169,7 +169,7 @@ func Test_ConvertChannelName(t *testing.T) {
 
 func TestGetNumRowsOfScalarField(t *testing.T) {
 	cases := []struct {
-		datas interface{}
+		data interface{}
 		want  uint64
 	}{
 		{[]bool{}, 0},
@@ -185,15 +185,15 @@ func TestGetNumRowsOfScalarField(t *testing.T) {
 	}
 
 	for _, test := range cases {
-		if got := getNumRowsOfScalarField(test.datas); got != test.want {
-			t.Errorf("getNumRowsOfScalarField(%v) = %v", test.datas, test.want)
+		if got := getNumRowsOfScalarField(test.data); got != test.want {
+			t.Errorf("getNumRowsOfScalarField(%v) = %v", test.data, test.want)
 		}
 	}
 }
 
 func TestGetNumRowsOfFloatVectorField(t *testing.T) {
 	cases := []struct {
-		fDatas   []float32
+		fData   []float32
 		dim      int64
 		want     uint64
 		errIsNil bool
@@ -207,11 +207,11 @@ func TestGetNumRowsOfFloatVectorField(t *testing.T) {
 	}
 
 	for _, test := range cases {
-		got, err := GetNumRowsOfFloatVectorField(test.fDatas, test.dim)
+		got, err := GetNumRowsOfFloatVectorField(test.fData, test.dim)
 		if test.errIsNil {
 			assert.Equal(t, nil, err)
 			if got != test.want {
-				t.Errorf("GetNumRowsOfFloatVectorField(%v, %v) = %v, %v", test.fDatas, test.dim, test.want, nil)
+				t.Errorf("GetNumRowsOfFloatVectorField(%v, %v) = %v, %v", test.fData, test.dim, test.want, nil)
 			}
 		} else {
 			assert.NotEqual(t, nil, err)
@@ -221,7 +221,7 @@ func TestGetNumRowsOfFloatVectorField(t *testing.T) {
 
 func TestGetNumRowsOfBinaryVectorField(t *testing.T) {
 	cases := []struct {
-		bDatas   []byte
+		bData   []byte
 		dim      int64
 		want     uint64
 		errIsNil bool
@@ -240,11 +240,11 @@ func TestGetNumRowsOfBinaryVectorField(t *testing.T) {
 	}
 
 	for _, test := range cases {
-		got, err := GetNumRowsOfBinaryVectorField(test.bDatas, test.dim)
+		got, err := GetNumRowsOfBinaryVectorField(test.bData, test.dim)
 		if test.errIsNil {
 			assert.Equal(t, nil, err)
 			if got != test.want {
-				t.Errorf("GetNumRowsOfBinaryVectorField(%v, %v) = %v, %v", test.bDatas, test.dim, test.want, nil)
+				t.Errorf("GetNumRowsOfBinaryVectorField(%v, %v) = %v, %v", test.bData, test.dim, test.want, nil)
 			}
 		} else {
 			assert.NotEqual(t, nil, err)

@@ -142,11 +142,11 @@ DiskFileManagerImpl::AddBatchIndexFiles(
     }
 
     // hold index data util upload index file done
-    std::vector<std::shared_ptr<uint8_t[]>> index_datas;
+    std::vector<std::shared_ptr<uint8_t[]>> index_data;
     std::vector<const uint8_t*> data_slices;
     for (auto& future : futures) {
         auto res = future.get();
-        index_datas.emplace_back(res);
+        index_data.emplace_back(res);
         data_slices.emplace_back(res.get());
     }
 
@@ -223,14 +223,14 @@ DiskFileManagerImpl::CacheBatchIndexFilesToDisk(
     uint64_t local_file_init_offfset) {
     auto local_chunk_manager =
         LocalChunkManagerSingleton::GetInstance().GetChunkManager();
-    auto index_datas = GetObjectData(rcm_.get(), remote_files);
+    auto index_data = GetObjectData(rcm_.get(), remote_files);
     int batch_size = remote_files.size();
-    AssertInfo(index_datas.size() == batch_size,
+    AssertInfo(index_data.size() == batch_size,
                "inconsistent file num and index data num!");
 
     uint64_t offset = local_file_init_offfset;
     for (int i = 0; i < batch_size; ++i) {
-        auto index_data = index_datas[i];
+        auto index_data = index_data[i];
         auto index_size = index_data->Size();
         auto uint8_data =
             reinterpret_cast<uint8_t*>(const_cast<void*>(index_data->Data()));
@@ -271,10 +271,10 @@ DiskFileManagerImpl::CacheRawDataToDisk(std::vector<std::string> remote_files) {
     int64_t write_offset = sizeof(num_rows) + sizeof(dim);
 
     auto FetchRawData = [&]() {
-        auto field_datas = GetObjectData(rcm_.get(), batch_files);
+        auto field_data = GetObjectData(rcm_.get(), batch_files);
         int batch_size = batch_files.size();
         for (int i = 0; i < batch_size; ++i) {
-            auto field_data = field_datas[i];
+            auto field_data = field_data[i];
             num_rows += uint32_t(field_data->get_num_rows());
             AssertInfo(dim == 0 || dim == field_data->get_dim(),
                        "inconsistent dim value in multi binlogs!");

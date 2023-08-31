@@ -26,7 +26,7 @@ const (
 	// SubscriptionPositionEarliest is earliest position which means the start consuming position will be the first message
 	SubscriptionPositionEarliest
 
-	// SubscriptionPositionUnkown indicates we don't care about the consumer location, since we are doing another seek or only some meta api over that
+	// SubscriptionPositionUnknown indicates we don't care about the consumer location, since we are doing another seek or only some meta api over that
 	SubscriptionPositionUnknown
 )
 
@@ -71,6 +71,6 @@ type Consumer interface {
 	// GetLatestMsgID return the latest message ID
 	GetLatestMsgID() (MessageID, error)
 
-	// check created topic whether vaild or not
+	// check created topic whether valid or not
 	CheckTopicValid(channel string) error
 }

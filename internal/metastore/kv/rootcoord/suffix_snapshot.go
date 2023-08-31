@@ -65,12 +65,12 @@ type SuffixSnapshot struct {
 	kv.MetaKv
 	// rw mutex provided range lock
 	sync.RWMutex
-	// lastestTS latest timestamp for each key
+	// latestTS latest timestamp for each key
 	// note that this map is lazy loaded
 	// which means if a key is never used in current session, no ts related to the key is stored
 	// so is ts is not recorded in map, a `load ts` process will be triggered
 	// a `0` for a key means that the key is not a snapshot key
-	lastestTS map[string]typeutil.Timestamp
+	latestTS map[string]typeutil.Timestamp
 	// separator is the conjunction string between actual key and trailing ts
 	// used in composing ts-key and check whether a key is a ts-key
 	separator string
@@ -114,7 +114,7 @@ func NewSuffixSnapshot(metaKV kv.MetaKv, sep, root, snapshot string) (*SuffixSna
 
 	ss := &SuffixSnapshot{
 		MetaKv:         metaKV,
-		lastestTS:      make(map[string]typeutil.Timestamp),
+		latestTS:      make(map[string]typeutil.Timestamp),
 		separator:      sep,
 		exp:            regexp.MustCompile(fmt.Sprintf(`^(.+)%s(\d+)$`, sep)),
 		snapshotPrefix: snapshot,
@@ -138,7 +138,7 @@ func (ss *SuffixSnapshot) hideRootPrefix(value string) string {
 }
 
 // composeSnapshotPrefix build a prefix for load snapshots
-// formated like [snapshotPrefix]/key[sep]
+// formatted like [snapshotPrefix]/key[sep]
 func (ss *SuffixSnapshot) composeSnapshotPrefix(key string) string {
 	return path.Join(ss.snapshotPrefix, key+ss.separator)
 }
@@ -197,13 +197,13 @@ func (ss *SuffixSnapshot) isTSOfKey(key string, groupKey string) (typeutil.Times
 // checkKeyTS checks provided key's latest ts is before provided ts
 // lock is needed
 func (ss *SuffixSnapshot) checkKeyTS(key string, ts typeutil.Timestamp) (bool, error) {
-	latest, has := ss.lastestTS[key]
+	latest, has := ss.latestTS[key]
 	if !has {
 		err := ss.loadLatestTS(key)
 		if err != nil {
 			return false, err
 		}
-		latest = ss.lastestTS[key]
+		latest = ss.latestTS[key]
 	}
 	return latest <= ts, nil
 }
@@ -225,13 +225,13 @@ func (ss *SuffixSnapshot) loadLatestTS(key string) error {
 		}
 	}
 	if len(tss) == 0 {
-		ss.lastestTS[key] = 0
+		ss.latestTS[key] = 0
 		return nil
 	}
 	sort.Slice(tss, func(i, j int) bool {
 		return tss[i] > tss[j]
 	})
-	ss.lastestTS[key] = tss[0]
+	ss.latestTS[key] = tss[0]
 	return nil
 }
 
@@ -275,7 +275,7 @@ func binarySearchRecords(records []tsv, ts typeutil.Timestamp) (string, bool) {
 // and for acceleration store original key-value if ts is the latest
 func (ss *SuffixSnapshot) Save(key string, value string, ts typeutil.Timestamp) error {
 	// if ts == 0, act like MetaKv
-	// will not update lastestTs since ts not not valid
+	// will not update latestTs since ts not not valid
 	if ts == 0 {
 		return ss.MetaKv.Save(key, value)
 	}
@@ -298,7 +298,7 @@ func (ss *SuffixSnapshot) Save(key string, value string, ts typeutil.Timestamp) 
 		})
 		// update latestTS only when MultiSave succeeds
 		if err == nil {
-			ss.lastestTS[key] = ts
+			ss.latestTS[key] = ts
 		}
 		return err
 	}
@@ -399,7 +399,7 @@ func (ss *SuffixSnapshot) MultiSave(kvs map[string]string, ts typeutil.Timestamp
 	err = ss.MetaKv.MultiSave(execute)
 	if err == nil {
 		for _, key := range updateList {
-			ss.lastestTS[key] = ts
+			ss.latestTS[key] = ts
 		}
 	}
 	return err
@@ -543,7 +543,7 @@ func (ss *SuffixSnapshot) MultiSaveAndRemoveWithPrefix(saves map[string]string, 
 	err = ss.MetaKv.MultiSave(execute)
 	if err == nil {
 		for _, key := range updateList {
-			ss.lastestTS[key] = ts
+			ss.latestTS[key] = ts
 		}
 	}
 	return err

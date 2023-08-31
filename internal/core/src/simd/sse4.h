@@ -26,7 +26,7 @@ template <typename T>
 bool
 FindTermSSE4(const T* src, size_t vec_size, T val) {
     CHECK_SUPPORTED_TYPE(T, "unsupported type for FindTermSSE2");
-    // SSE4 still hava 128bit, using same code with SSE2
+    // SSE4 still have 128bit, using same code with SSE2
     return FindTermSSE2<T>(src, vec_size, val);
 }
 

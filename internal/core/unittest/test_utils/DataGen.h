@@ -448,11 +448,11 @@ DataGenForJsonArray(SchemaPtr schema,
 
 inline auto
 CreatePlaceholderGroup(int64_t num_queries, int dim, int64_t seed = 42) {
-    namespace ser = milvus::proto::common;
-    ser::PlaceholderGroup raw_group;
+    namespace set = milvus::proto::common;
+    set::PlaceholderGroup raw_group;
     auto value = raw_group.add_placeholders();
     value->set_tag("$0");
-    value->set_type(ser::PlaceholderType::FloatVector);
+    value->set_type(set::PlaceholderType::FloatVector);
     std::normal_distribution<double> dis(0, 1);
     std::default_random_engine e(seed);
     for (int i = 0; i < num_queries; ++i) {
@@ -470,11 +470,11 @@ inline auto
 CreatePlaceholderGroup(int64_t num_queries,
                        int dim,
                        const std::vector<float>& vecs) {
-    namespace ser = milvus::proto::common;
-    ser::PlaceholderGroup raw_group;
+    namespace set = milvus::proto::common;
+    set::PlaceholderGroup raw_group;
     auto value = raw_group.add_placeholders();
     value->set_tag("$0");
-    value->set_type(ser::PlaceholderType::FloatVector);
+    value->set_type(set::PlaceholderType::FloatVector);
     for (int i = 0; i < num_queries; ++i) {
         std::vector<float> vec;
         for (int d = 0; d < dim; ++d) {
@@ -487,11 +487,11 @@ CreatePlaceholderGroup(int64_t num_queries,
 
 inline auto
 CreatePlaceholderGroupFromBlob(int64_t num_queries, int dim, const float* src) {
-    namespace ser = milvus::proto::common;
-    ser::PlaceholderGroup raw_group;
+    namespace set = milvus::proto::common;
+    set::PlaceholderGroup raw_group;
     auto value = raw_group.add_placeholders();
     value->set_tag("$0");
-    value->set_type(ser::PlaceholderType::FloatVector);
+    value->set_type(set::PlaceholderType::FloatVector);
     int64_t src_index = 0;
 
     for (int i = 0; i < num_queries; ++i) {
@@ -510,11 +510,11 @@ CreateBinaryPlaceholderGroup(int64_t num_queries,
                              int64_t dim,
                              int64_t seed = 42) {
     assert(dim % 8 == 0);
-    namespace ser = milvus::proto::common;
-    ser::PlaceholderGroup raw_group;
+    namespace set = milvus::proto::common;
+    set::PlaceholderGroup raw_group;
     auto value = raw_group.add_placeholders();
     value->set_tag("$0");
-    value->set_type(ser::PlaceholderType::BinaryVector);
+    value->set_type(set::PlaceholderType::BinaryVector);
     std::default_random_engine e(seed);
     for (int i = 0; i < num_queries; ++i) {
         std::vector<uint8_t> vec;
@@ -532,11 +532,11 @@ CreateBinaryPlaceholderGroupFromBlob(int64_t num_queries,
                                      int64_t dim,
                                      const uint8_t* ptr) {
     assert(dim % 8 == 0);
-    namespace ser = milvus::proto::common;
-    ser::PlaceholderGroup raw_group;
+    namespace set = milvus::proto::common;
+    set::PlaceholderGroup raw_group;
     auto value = raw_group.add_placeholders();
     value->set_tag("$0");
-    value->set_type(ser::PlaceholderType::BinaryVector);
+    value->set_type(set::PlaceholderType::BinaryVector);
     for (int i = 0; i < num_queries; ++i) {
         std::vector<uint8_t> vec;
         for (int d = 0; d < dim / 8; ++d) {

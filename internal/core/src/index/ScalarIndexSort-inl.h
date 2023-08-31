@@ -47,11 +47,11 @@ ScalarIndexSort<T>::Build(const Config& config) {
         GetValueFromConfig<std::vector<std::string>>(config, "insert_files");
     AssertInfo(insert_files.has_value(),
                "insert file paths is empty when build index");
-    auto field_datas =
+    auto field_data =
         file_manager_->CacheRawDataToMemory(insert_files.value());
 
     int64_t total_num_rows = 0;
-    for (auto data : field_datas) {
+    for (auto data : field_data) {
         total_num_rows += data->get_num_rows();
     }
     if (total_num_rows == 0) {
@@ -62,7 +62,7 @@ ScalarIndexSort<T>::Build(const Config& config) {
 
     data_.reserve(total_num_rows);
     int64_t offset = 0;
-    for (auto data : field_datas) {
+    for (auto data : field_data) {
         auto slice_num = data->get_num_rows();
         for (size_t i = 0; i < slice_num; ++i) {
             auto value = reinterpret_cast<const T*>(data->RawValue(i));
@@ -171,10 +171,10 @@ ScalarIndexSort<T>::Load(const Config& config) {
         GetValueFromConfig<std::vector<std::string>>(config, "index_files");
     AssertInfo(index_files.has_value(),
                "index file paths is empty when load disk ann index");
-    auto index_datas = file_manager_->LoadIndexToMemory(index_files.value());
-    AssembleIndexDatas(index_datas);
+    auto index_data = file_manager_->LoadIndexToMemory(index_files.value());
+    AssembleIndexData(index_data);
     BinarySet binary_set;
-    for (auto& [key, data] : index_datas) {
+    for (auto& [key, data] : index_data) {
         auto size = data->Size();
         auto deleter = [&](uint8_t*) {};  // avoid repeated deconstruction
         auto buf = std::shared_ptr<uint8_t[]>(

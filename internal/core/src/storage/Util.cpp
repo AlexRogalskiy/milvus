@@ -424,13 +424,13 @@ GetObjectData(ChunkManager* remote_chunk_manager,
             DownloadAndDecodeRemoteFile, remote_chunk_manager, file));
     }
 
-    std::vector<FieldDataPtr> datas;
+    std::vector<FieldDataPtr> data;
     for (int i = 0; i < futures.size(); ++i) {
         auto res = futures[i].get();
-        datas.emplace_back(res->GetFieldData());
+        data.emplace_back(res->GetFieldData());
     }
     ReleaseArrowUnused();
-    return datas;
+    return data;
 }
 
 std::map<std::string, int64_t>
@@ -468,9 +468,9 @@ PutIndexData(ChunkManager* remote_chunk_manager,
 }
 
 int64_t
-GetTotalNumRowsForFieldDatas(const std::vector<FieldDataPtr>& field_datas) {
+GetTotalNumRowsForFieldData(const std::vector<FieldDataPtr>& field_data) {
     int64_t count = 0;
-    for (auto& field_data : field_datas) {
+    for (auto& field_data : field_data) {
         count += field_data->get_num_rows();
     }
 
@@ -567,9 +567,9 @@ CreateFieldData(const DataType& type, int64_t dim, int64_t total_num_rows) {
 }
 
 int64_t
-GetByteSizeOfFieldDatas(const std::vector<FieldDataPtr>& field_datas) {
+GetByteSizeOfFieldData(const std::vector<FieldDataPtr>& field_data) {
     int64_t result = 0;
-    for (auto& data : field_datas) {
+    for (auto& data : field_data) {
         result += data->Size();
     }
 

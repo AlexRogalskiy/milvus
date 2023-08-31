@@ -45,8 +45,8 @@ type EmbedEtcdKV struct {
 	closeOnce sync.Once
 }
 
-// NewEmbededEtcdKV creates a new etcd kv.
-func NewEmbededEtcdKV(cfg *embed.Config, rootPath string) (*EmbedEtcdKV, error) {
+// NewEmbeddedEtcdKV creates a new etcd kv.
+func NewEmbeddedEtcdKV(cfg *embed.Config, rootPath string) (*EmbedEtcdKV, error) {
 	e, err := embed.StartEtcd(cfg)
 	if err != nil {
 		return nil, err

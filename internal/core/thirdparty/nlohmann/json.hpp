@@ -5142,7 +5142,7 @@ auto input_adapter(T (&array)[N]) -> decltype(input_adapter(array, array + N))
 }
 
 // This class only handles inputs of input_buffer_adapter type.
-// It's required so that expressions like {ptr, len} can be implicitely casted
+// It's required so that expressions like {ptr, len} can be implicitly casted
 // to the correct adapter.
 class span_input_adapter
 {
@@ -7678,7 +7678,7 @@ enum class cbor_tag_handler_t
 
 @note from https://stackoverflow.com/a/1001328/266378
 */
-static inline bool little_endianess(int num = 1) noexcept
+static inline bool little_endianness(int num = 1) noexcept
 {
     return *reinterpret_cast<char*>(&num) == 1;
 }
@@ -7822,7 +7822,7 @@ class binary_reader
         while (true)
         {
             get();
-            if (JSON_HEDLEY_UNLIKELY(!unexpect_eof(input_format_t::bson, "cstring")))
+            if (JSON_HEDLEY_UNLIKELY(!unexpected_eof(input_format_t::bson, "cstring")))
             {
                 return false;
             }
@@ -7977,7 +7977,7 @@ class binary_reader
 
         while (auto element_type = get())
         {
-            if (JSON_HEDLEY_UNLIKELY(!unexpect_eof(input_format_t::bson, "element list")))
+            if (JSON_HEDLEY_UNLIKELY(!unexpected_eof(input_format_t::bson, "element list")))
             {
                 return false;
             }
@@ -8046,7 +8046,7 @@ class binary_reader
         {
             // EOF
             case std::char_traits<char_type>::eof():
-                return unexpect_eof(input_format_t::cbor, "value");
+                return unexpected_eof(input_format_t::cbor, "value");
 
             // Integer 0x00..0x17 (0..23)
             case 0x00:
@@ -8408,12 +8408,12 @@ class binary_reader
             case 0xF9: // Half-Precision Float (two-byte IEEE 754)
             {
                 const auto byte1_raw = get();
-                if (JSON_HEDLEY_UNLIKELY(!unexpect_eof(input_format_t::cbor, "number")))
+                if (JSON_HEDLEY_UNLIKELY(!unexpected_eof(input_format_t::cbor, "number")))
                 {
                     return false;
                 }
                 const auto byte2_raw = get();
-                if (JSON_HEDLEY_UNLIKELY(!unexpect_eof(input_format_t::cbor, "number")))
+                if (JSON_HEDLEY_UNLIKELY(!unexpected_eof(input_format_t::cbor, "number")))
                 {
                     return false;
                 }
@@ -8486,7 +8486,7 @@ class binary_reader
     */
     bool get_cbor_string(string_t& result)
     {
-        if (JSON_HEDLEY_UNLIKELY(!unexpect_eof(input_format_t::cbor, "string")))
+        if (JSON_HEDLEY_UNLIKELY(!unexpected_eof(input_format_t::cbor, "string")))
         {
             return false;
         }
@@ -8581,7 +8581,7 @@ class binary_reader
     */
     bool get_cbor_binary(binary_t& result)
     {
-        if (JSON_HEDLEY_UNLIKELY(!unexpect_eof(input_format_t::cbor, "binary")))
+        if (JSON_HEDLEY_UNLIKELY(!unexpected_eof(input_format_t::cbor, "binary")))
         {
             return false;
         }
@@ -8770,7 +8770,7 @@ class binary_reader
         {
             // EOF
             case std::char_traits<char_type>::eof():
-                return unexpect_eof(input_format_t::msgpack, "value");
+                return unexpected_eof(input_format_t::msgpack, "value");
 
             // positive fixint
             case 0x00:
@@ -9146,7 +9146,7 @@ class binary_reader
     */
     bool get_msgpack_string(string_t& result)
     {
-        if (JSON_HEDLEY_UNLIKELY(!unexpect_eof(input_format_t::msgpack, "string")))
+        if (JSON_HEDLEY_UNLIKELY(!unexpected_eof(input_format_t::msgpack, "string")))
         {
             return false;
         }
@@ -9422,7 +9422,7 @@ class binary_reader
             get();  // TODO(niels): may we ignore N here?
         }
 
-        if (JSON_HEDLEY_UNLIKELY(!unexpect_eof(input_format_t::ubjson, "value")))
+        if (JSON_HEDLEY_UNLIKELY(!unexpected_eof(input_format_t::ubjson, "value")))
         {
             return false;
         }
@@ -9556,7 +9556,7 @@ class binary_reader
         if (current == '$')
         {
             result.second = get();  // must not ignore 'N', because 'N' maybe the type
-            if (JSON_HEDLEY_UNLIKELY(!unexpect_eof(input_format_t::ubjson, "type")))
+            if (JSON_HEDLEY_UNLIKELY(!unexpected_eof(input_format_t::ubjson, "type")))
             {
                 return false;
             }
@@ -9564,7 +9564,7 @@ class binary_reader
             get_ignore_noop();
             if (JSON_HEDLEY_UNLIKELY(current != '#'))
             {
-                if (JSON_HEDLEY_UNLIKELY(!unexpect_eof(input_format_t::ubjson, "value")))
+                if (JSON_HEDLEY_UNLIKELY(!unexpected_eof(input_format_t::ubjson, "value")))
                 {
                     return false;
                 }
@@ -9592,7 +9592,7 @@ class binary_reader
         switch (prefix)
         {
             case std::char_traits<char_type>::eof():  // EOF
-                return unexpect_eof(input_format_t::ubjson, "value");
+                return unexpected_eof(input_format_t::ubjson, "value");
 
             case 'T':  // true
                 return sax->boolean(true);
@@ -9652,7 +9652,7 @@ class binary_reader
             case 'C':  // char
             {
                 get();
-                if (JSON_HEDLEY_UNLIKELY(!unexpect_eof(input_format_t::ubjson, "char")))
+                if (JSON_HEDLEY_UNLIKELY(!unexpected_eof(input_format_t::ubjson, "char")))
                 {
                     return false;
                 }
@@ -9840,7 +9840,7 @@ class binary_reader
         for (std::size_t i = 0; i < size; ++i)
         {
             get();
-            if (JSON_HEDLEY_UNLIKELY(!unexpect_eof(input_format_t::ubjson, "number")))
+            if (JSON_HEDLEY_UNLIKELY(!unexpected_eof(input_format_t::ubjson, "number")))
             {
                 return false;
             }
@@ -9916,7 +9916,7 @@ class binary_reader
 
     @return whether conversion completed
 
-    @note This function needs to respect the system's endianess, because
+    @note This function needs to respect the system's endianness, because
           bytes in CBOR, MessagePack, and UBJSON are stored in network order
           (big endian) and therefore need reordering on little endian systems.
     */
@@ -9928,7 +9928,7 @@ class binary_reader
         for (std::size_t i = 0; i < sizeof(NumberType); ++i)
         {
             get();
-            if (JSON_HEDLEY_UNLIKELY(!unexpect_eof(format, "number")))
+            if (JSON_HEDLEY_UNLIKELY(!unexpected_eof(format, "number")))
             {
                 return false;
             }
@@ -9960,7 +9960,7 @@ class binary_reader
     @return whether string creation completed
 
     @note We can not reserve @a len bytes for the result, because @a len
-          may be too large. Usually, @ref unexpect_eof() detects the end of
+          may be too large. Usually, @ref unexpected_eof() detects the end of
           the input before we run out of string memory.
     */
     template<typename NumberType>
@@ -9972,7 +9972,7 @@ class binary_reader
         for (NumberType i = 0; i < len; i++)
         {
             get();
-            if (JSON_HEDLEY_UNLIKELY(!unexpect_eof(format, "string")))
+            if (JSON_HEDLEY_UNLIKELY(!unexpected_eof(format, "string")))
             {
                 success = false;
                 break;
@@ -9993,7 +9993,7 @@ class binary_reader
     @return whether byte array creation completed
 
     @note We can not reserve @a len bytes for the result, because @a len
-          may be too large. Usually, @ref unexpect_eof() detects the end of
+          may be too large. Usually, @ref unexpected_eof() detects the end of
           the input before we run out of memory.
     */
     template<typename NumberType>
@@ -10005,7 +10005,7 @@ class binary_reader
         for (NumberType i = 0; i < len; i++)
         {
             get();
-            if (JSON_HEDLEY_UNLIKELY(!unexpect_eof(format, "binary")))
+            if (JSON_HEDLEY_UNLIKELY(!unexpected_eof(format, "binary")))
             {
                 success = false;
                 break;
@@ -10021,7 +10021,7 @@ class binary_reader
     @return whether the last read character is not EOF
     */
     JSON_HEDLEY_NON_NULL(3)
-    bool unexpect_eof(const input_format_t format, const char* context) const
+    bool unexpected_eof(const input_format_t format, const char* context) const
     {
         if (JSON_HEDLEY_UNLIKELY(current == std::char_traits<char_type>::eof()))
         {
@@ -10088,8 +10088,8 @@ class binary_reader
     /// the number of characters read
     std::size_t chars_read = 0;
 
-    /// whether we can assume little endianess
-    const bool is_little_endian = little_endianess();
+    /// whether we can assume little endianness
+    const bool is_little_endian = little_endianness();
 
     /// the SAX parser
     json_sax_t* sax = nullptr;
@@ -14227,7 +14227,7 @@ class binary_writer
     @tparam OutputIsLittleEndian Set to true if output data is
                                  required to be little endian
 
-    @note This function needs to respect the system's endianess, because bytes
+    @note This function needs to respect the system's endianness, because bytes
           in CBOR, MessagePack, and UBJSON are stored in network order (big
           endian) and therefore need reordering on little endian systems.
     */
@@ -14310,8 +14310,8 @@ class binary_writer
     }
 
   private:
-    /// whether we can assume little endianess
-    const bool is_little_endian = little_endianess();
+    /// whether we can assume little endianness
+    const bool is_little_endian = little_endianness();
 
     /// the output
     output_adapter_t<CharType> oa = nullptr;
@@ -21337,7 +21337,7 @@ class basic_json
           `key()` returns an empty string.
 
     @warning Using `items()` on temporary objects is dangerous. Make sure the
-             object's lifetime exeeds the iteration. See
+             object's lifetime exceeds the iteration. See
              <https://github.com/nlohmann/json/issues/2040> for more
              information.
 

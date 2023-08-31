@@ -41,13 +41,13 @@ type deleteNode struct {
 }
 
 // addDeleteData find the segment of delete column in DeleteMsg and save in deleteData
-func (dNode *deleteNode) addDeleteData(deleteDatas map[UniqueID]*delegator.DeleteData, msg *DeleteMsg) {
-	deleteData, ok := deleteDatas[msg.PartitionID]
+func (dNode *deleteNode) addDeleteData(deleteData map[UniqueID]*delegator.DeleteData, msg *DeleteMsg) {
+	deleteData, ok := deleteData[msg.PartitionID]
 	if !ok {
 		deleteData = &delegator.DeleteData{
 			PartitionID: msg.PartitionID,
 		}
-		deleteDatas[msg.PartitionID] = deleteData
+		deleteData[msg.PartitionID] = deleteData
 	}
 	pks := storage.ParseIDs2PrimaryKeys(msg.PrimaryKeys)
 	deleteData.PrimaryKeys = append(deleteData.PrimaryKeys, pks...)
@@ -67,15 +67,15 @@ func (dNode *deleteNode) Operate(in Msg) Msg {
 	nodeMsg := in.(*deleteNodeMsg)
 
 	// partition id = > DeleteData
-	deleteDatas := make(map[UniqueID]*delegator.DeleteData)
+	deleteData := make(map[UniqueID]*delegator.DeleteData)
 
 	for _, msg := range nodeMsg.deleteMsgs {
-		dNode.addDeleteData(deleteDatas, msg)
+		dNode.addDeleteData(deleteData, msg)
 	}
 
-	if len(deleteDatas) > 0 {
+	if len(deleteData) > 0 {
 		//do Delete, use ts range max as ts
-		dNode.delegator.ProcessDelete(lo.Values(deleteDatas), nodeMsg.timeRange.timestampMax)
+		dNode.delegator.ProcessDelete(lo.Values(deleteData), nodeMsg.timeRange.timestampMax)
 	}
 
 	//update tSafe

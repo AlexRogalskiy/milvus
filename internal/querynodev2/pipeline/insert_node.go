@@ -41,14 +41,14 @@ type insertNode struct {
 	delegator    delegator.ShardDelegator
 }
 
-func (iNode *insertNode) addInsertData(insertDatas map[UniqueID]*delegator.InsertData, msg *InsertMsg, collection *Collection) {
+func (iNode *insertNode) addInsertData(insertData map[UniqueID]*delegator.InsertData, msg *InsertMsg, collection *Collection) {
 	insertRecord, err := storage.TransferInsertMsgToInsertRecord(collection.Schema(), msg)
 	if err != nil {
 		err = fmt.Errorf("failed to get primary keys, err = %d", err)
 		log.Error(err.Error(), zap.Int64("collectionID", iNode.collectionID), zap.String("channel", iNode.channel))
 		panic(err)
 	}
-	iData, ok := insertDatas[msg.SegmentID]
+	iData, ok := insertData[msg.SegmentID]
 	if !ok {
 		iData = &delegator.InsertData{
 			PartitionID:  msg.PartitionID,
@@ -58,7 +58,7 @@ func (iNode *insertNode) addInsertData(insertDatas map[UniqueID]*delegator.Inser
 				ChannelName: msg.GetShardName(),
 			},
 		}
-		insertDatas[msg.SegmentID] = iData
+		insertData[msg.SegmentID] = iData
 	} else {
 		err := typeutil.MergeFieldData(iData.InsertRecord.FieldsData, insertRecord.FieldsData)
 		if err != nil {
@@ -94,19 +94,19 @@ func (iNode *insertNode) Operate(in Msg) Msg {
 		return nodeMsg.insertMsgs[i].BeginTs() < nodeMsg.insertMsgs[j].BeginTs()
 	})
 
-	insertDatas := make(map[UniqueID]*delegator.InsertData)
+	insertData := make(map[UniqueID]*delegator.InsertData)
 	collection := iNode.manager.Collection.Get(iNode.collectionID)
 	if collection == nil {
 		log.Error("insertNode with collection not exist", zap.Int64("collection", iNode.collectionID))
 		panic("insertNode with collection not exist")
 	}
 
-	//get InsertData and merge datas of same segment
+	//get InsertData and merge data of same segment
 	for _, msg := range nodeMsg.insertMsgs {
-		iNode.addInsertData(insertDatas, msg, collection)
+		iNode.addInsertData(insertData, msg, collection)
 	}
 
-	iNode.delegator.ProcessInsert(insertDatas)
+	iNode.delegator.ProcessInsert(insertData)
 
 	metrics.QueryNodeWaitProcessingMsgCount.WithLabelValues(fmt.Sprint(paramtable.GetNodeID()), metrics.DeleteLabel).Inc()
 

@@ -40,7 +40,7 @@ type nmqMessage struct {
 // Topic returns the topic name of natsmq message
 func (nm *nmqMessage) Topic() string {
 	// TODO: Dependency: implement of subscription logic of nmq.
-	// 1:1 Subject:Topic model is appied on this implementation.
+	// 1:1 Subject:Topic model is applied on this implementation.
 	// M:N model should be a optimize option in future.
 	return nm.raw.Subject
 }

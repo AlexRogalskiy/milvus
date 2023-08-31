@@ -1872,7 +1872,7 @@ func (m *ShowConfigurationsRequest) GetPattern() string {
 
 type ShowConfigurationsResponse struct {
 	Status               *commonpb.Status         `protobuf:"bytes,1,opt,name=status,proto3" json:"status,omitempty"`
-	Configuations        []*commonpb.KeyValuePair `protobuf:"bytes,2,rep,name=configuations,proto3" json:"configuations,omitempty"`
+	Configurations        []*commonpb.KeyValuePair `protobuf:"bytes,2,rep,name=configurations,proto3" json:"configurations,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}                 `json:"-"`
 	XXX_unrecognized     []byte                   `json:"-"`
 	XXX_sizecache        int32                    `json:"-"`
@@ -1910,9 +1910,9 @@ func (m *ShowConfigurationsResponse) GetStatus() *commonpb.Status {
 	return nil
 }
 
-func (m *ShowConfigurationsResponse) GetConfiguations() []*commonpb.KeyValuePair {
+func (m *ShowConfigurationsResponse) GetConfigurations() []*commonpb.KeyValuePair {
 	if m != nil {
-		return m.Configuations
+		return m.Configurations
 	}
 	return nil
 }

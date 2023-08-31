@@ -33,7 +33,7 @@ const (
 	indexNodeBits
 	proxyBits
 	standaloneBits
-	embededBits
+	embeddedBits
 
 	retriableFlag      = 1 << 20
 	RootReasonCodeMask = (1 << 16) - 1
@@ -44,7 +44,7 @@ const (
 
 // Define leaf errors here,
 // WARN: take care to add new error,
-// check whehter you can use the erorrs below before adding a new one.
+// check whether you can use the errors below before adding a new one.
 // Name: Err + related prefix + error name
 var (
 	// Service related
@@ -80,7 +80,7 @@ var (
 	ErrChannelLack          = newMilvusError("channel lacks", 501, false)
 	ErrChannelReduplicate   = newMilvusError("channel reduplicates", 502, false)
 	ErrChannelNotAvailable  = newMilvusError("channel not available", 503, false)
-	ErrChannelUnsubscribing = newMilvusError("chanel is unsubscribing", 504, true)
+	ErrChannelUnsubscribing = newMilvusError("channel is unsubscribing", 504, true)
 
 	// Segment related
 	ErrSegmentNotFound    = newMilvusError("segment not found", 600, false)
@@ -162,7 +162,7 @@ func maskComponentBits(code int32) int32 {
 	case typeutil.StandaloneRole:
 		return code | standaloneBits
 	case typeutil.EmbeddedRole:
-		return code | embededBits
+		return code | embeddedBits
 	}
 	return code
 }

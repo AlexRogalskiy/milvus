@@ -143,7 +143,7 @@ func getPrimaryKeysFromExpr(schema *schemapb.CollectionSchema, expr string) (res
 			},
 		}
 	default:
-		return res, 0, fmt.Errorf("invalid field data type specifyed in delete expr")
+		return res, 0, fmt.Errorf("invalid field data type specified in delete expr")
 	}
 
 	return res, rowNum, nil
